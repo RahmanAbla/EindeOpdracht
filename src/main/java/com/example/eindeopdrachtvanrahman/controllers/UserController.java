@@ -46,6 +46,7 @@ public class UserController {
         return ResponseEntity.created(location).build();
     }
 
+
     @PutMapping(value = "/{username}")
     public ResponseEntity<UserDTO> updateKlant(@PathVariable("username")String username,@RequestBody UserDTO dto) throws RecordNotFoundException {
         userServise.updateUser(username,dto);
