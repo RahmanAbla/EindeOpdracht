@@ -38,7 +38,7 @@ public class SpringSecurityConfig {
 
    // authenticatie met customUserDetailsService en PasswordEncoder
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
+    public AuthenticationManager authenticationManager( PasswordEncoder passwordEncoder) throws Exception {
         var auth = new DaoAuthenticationProvider();
         auth.setPasswordEncoder(passwordEncoder);
         auth.setUserDetailsService(customUserDetailsService);
@@ -57,6 +57,7 @@ public class SpringSecurityConfig {
                                 auth
                                         // Wanneer je deze uncomments, staat je hele security open. Je hebt dan alleen nog een jwt nodig.
 //                .requestMatchers("/**").permitAll()
+                                        .requestMatchers( "/cars").hasRole("USER")
                                         .requestMatchers(HttpMethod.POST, "/users").hasRole("USER")
                                         .requestMatchers(HttpMethod.GET,"/users").hasRole("USER")
                                         .requestMatchers(HttpMethod.POST,"/users/**").hasRole("USER")
