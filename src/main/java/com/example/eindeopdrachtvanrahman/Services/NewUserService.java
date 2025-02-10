@@ -1,15 +1,15 @@
-package com.example.eindeopdrachtvanrahman.Services;
+//package com.example.eindeopdrachtvanrahman.Services;
+//
+//import com.example.eindeopdrachtvanrahman.repository.NewUserRepository;
+//import org.springframework.stereotype.Service;
+//
+//@Service
+//public class NewUserService {
+//    private final NewUserRepository newUserRepository;
 
-import com.example.eindeopdrachtvanrahman.repository.NewUserRepository;
-import org.springframework.stereotype.Service;
-
-@Service
-public class NewUserService {
-    private final NewUserRepository newUserRepository;
-
-    public NewUserService(NewUserRepository newUserRepository) {
-        this.newUserRepository = newUserRepository;
-    }
+//    public NewUserService(NewUserRepository newUserRepository) {
+//        this.newUserRepository = newUserRepository;
+//    }
 //    public List<UserDto> getUsers() {
 //        List<UserDto> collection = new ArrayList<>();
 //        List<User> list = userRepository.findAll();
@@ -102,4 +102,4 @@ public class NewUserService {
 //        return user;
 //    }
 
-}
+//}

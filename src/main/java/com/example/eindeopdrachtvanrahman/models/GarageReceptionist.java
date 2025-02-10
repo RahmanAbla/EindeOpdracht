@@ -1,11 +1,9 @@
 package com.example.eindeopdrachtvanrahman.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "garagereceptionists")
 public class GarageReceptionist {
     private String name;
     private int phoneNumber;

@@ -16,33 +16,33 @@ public class ClientController {
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
-    @GetMapping("/AllClients")
+    @GetMapping("/clients")
     public ResponseEntity<List<ClientDTO>> getAllClients() {
 
         List<ClientDTO> dtos = clientService.getAllClients();
 
         return ResponseEntity.ok(dtos);
     }
-    @GetMapping("/Client/{id}")
+    @GetMapping("/clients/{id}")
     public ResponseEntity<ClientDTO> getClientById(@PathVariable("id") Long id) throws Exception {
 
         ClientDTO clientDTO = clientService.getClientById(id);
 
         return ResponseEntity.ok(clientDTO);
     }
-    @PostMapping("/Client")
+    @PostMapping("/clients")
     public ResponseEntity<Object> addClient(@RequestBody ClientDTO dto) {
         ClientDTO clientDTO = clientService.addClient(dto);
         return ResponseEntity.created(null).body(clientDTO);
     }
-    @DeleteMapping("/deleteClient/{id}")
+    @DeleteMapping("/clients/{id}")
     public ResponseEntity<Object> deleteClient(@PathVariable Long id) {
 
         clientService.deleteClient(id);
 
         return ResponseEntity.noContent().build();
     }
-    @PutMapping("/updateClient/{id}")
+    @PutMapping("/clients/{id}")
     public ResponseEntity<Object> updateClient(@PathVariable Long id, @RequestBody ClientDTO newClient) throws RecordNotFoundException {
      ClientDTO dto= clientService.updateClient(id, newClient);
         return ResponseEntity.ok(dto);

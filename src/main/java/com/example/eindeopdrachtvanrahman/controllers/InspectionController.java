@@ -15,33 +15,33 @@ public class InspectionController { private final InspectionServise inspectionSe
     public InspectionController(InspectionServise inspectionServise) {
         this.inspectionServise = inspectionServise;
     }
-    @GetMapping("/AllInspections")
+    @GetMapping("/inspections")
     public ResponseEntity<List<InspectionDTO>>getAllInspections() {
 
         List<InspectionDTO> dtos = inspectionServise.getAllInspections();
 
         return ResponseEntity.ok(dtos);
     }
-    @GetMapping("/Inspection/{id}")
+    @GetMapping("/inspections/{id}")
     public ResponseEntity<InspectionDTO> getInspectionById(@PathVariable("id") Long id) throws Exception {
 
         InspectionDTO inspectionDTO = inspectionServise.getInspectionById(id);
 
         return ResponseEntity.ok(inspectionDTO);
     }
-    @PostMapping("/Inspection")
+    @PostMapping("/inspections")
     public ResponseEntity<Object> addInspection(@RequestBody InspectionDTO dto) {
         InspectionDTO inspectionDTO =inspectionServise.addInspection(dto);
         return ResponseEntity.created(null).body(inspectionDTO);
     }
-    @DeleteMapping("/deleteInspection/{id}")
+    @DeleteMapping("/inspections/{id}")
     public ResponseEntity<Object> deleteInspection(@PathVariable Long id) {
 
         inspectionServise.deleteInspection(id);
 
         return ResponseEntity.noContent().build();
     }
-    @PutMapping("/Inspection/{id}")
+    @PutMapping("/inspections/{id}")
     public ResponseEntity<Object> updateInspection(@PathVariable Long id,@Valid @RequestBody InspectionDTO newInspection) throws RecordNotFoundException {
       InspectionDTO dto=inspectionServise.updateInspection(id,newInspection);
         return ResponseEntity.ok().body(dto);

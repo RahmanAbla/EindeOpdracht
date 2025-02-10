@@ -17,31 +17,31 @@ public class RepairController {
     public RepairController(RepairService repairService) {
         this.repairService = repairService;
     }
-    @GetMapping("/AllRepair")
+    @GetMapping("/repairs")
     public ResponseEntity<List<RepairDTO>>getAllRepairs() {
         List<RepairDTO> dtos = repairService.getAllRepairs();
 
         return ResponseEntity.ok(dtos);
     }
-    @GetMapping("/Repair/{id}")
+    @GetMapping("/repairs/{id}")
     public ResponseEntity<RepairDTO> getRepair(@PathVariable("id") Long id) throws Exception {
         RepairDTO repairDTO =repairService.getRepairById(id);
 
         return ResponseEntity.ok(repairDTO);
     }
-    @PostMapping("/addRepair")
+    @PostMapping("/repairs")
     public ResponseEntity<Object> addRepair(@RequestBody RepairDTO dto) {
             RepairDTO repairDTO=repairService.addRepair(dto);
         return ResponseEntity.created(null).body(repairDTO);
     }
-    @DeleteMapping("/deleteRepair/{id}")
+    @DeleteMapping("/repairs/{id}")
     public ResponseEntity<Object>deleteRepair(@PathVariable Long id) {
 
         repairService.deleteRepair(id);
 
         return ResponseEntity.noContent().build();
     }
-    @PutMapping("/updateRepair/{id}")
+    @PutMapping("/repairs/{id}")
     public ResponseEntity<Object> updateRepair(@PathVariable Long id, @Valid @RequestBody RepairDTO newRepair) throws RecordNotFoundException {
        RepairDTO dto=repairService.updateRepair(id,newRepair);
        return ResponseEntity.ok().body(dto);

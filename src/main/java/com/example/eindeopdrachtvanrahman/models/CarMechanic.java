@@ -3,7 +3,7 @@ package com.example.eindeopdrachtvanrahman.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name ="carmechanic" )
+@Table(name ="carmechanics" )
 public class CarMechanic {
     private String name;
     private int age;

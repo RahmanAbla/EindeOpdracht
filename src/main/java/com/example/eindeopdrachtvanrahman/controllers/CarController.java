@@ -17,7 +17,7 @@ public class CarController {
         this.carService = carService;
     }
     @GetMapping("/cars")
-    public ResponseEntity <List<CarDTO>>getAllCars(){  //moet fixen
+    public ResponseEntity <List<CarDTO>>getAllCars(){
         List<CarDTO>dtos=carService.getAllCars();
         return ResponseEntity.ok(dtos);
     }
@@ -32,14 +32,14 @@ public class CarController {
         return ResponseEntity.created(null).body(carDTO);
 
     }
-    @DeleteMapping("/deletecars/{id}")
+    @DeleteMapping("/cars/{id}")
     public ResponseEntity<Object> deleteCar(@PathVariable Long id) {
 
         carService.deleteCar(id);
 
         return ResponseEntity.noContent().build();
     }
-    @PutMapping("/updatecars/{id}")
+    @PutMapping("/cars/{id}")
     public ResponseEntity<Object> updateCar(@PathVariable Long id, @Valid @RequestBody CarInputDto newCar) throws RecordNotFoundException {
         CarDTO dto=carService.updateCar(id ,newCar);
         return ResponseEntity.ok().body(dto);

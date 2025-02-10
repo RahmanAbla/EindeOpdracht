@@ -2,4 +2,10 @@ INSERT INTO users (username, password, enabled, apikey, email) VALUES ('henk', '
  'test@testy.tst');
 INSERT INTO authorities (username, authority) VALUES ('henk', 'ROLE_USER');
 INSERT INTO cars(brand,model,manufacturingYear)VALUES('Toyota','C-HR',2020);
-INSERT INTO carmechanic(name,age,address,email)VALUES ('Robert',25,'Tulpstraat 22','robert456@.gmail.com');
+INSERT INTO carmechanics(name,age,address,email)VALUES ('Robert',25,'Tulpstraat 24','robert456@.gmail.com');
+INSERT INTO clients(name,age,email)VALUES ('Jan',30,'Jan@.hotmail.com');
+INSERT INTO garagereceptionists(name,phone_number,email)VALUES ('Mark',0686986617,'mark12@.gmail.com');
+INSERT INTO inspections(status,report,inspection_cost)VALUES (true,'Inspection completed successfully',130.30);
+INSERT INTO invoices(description,repair_cost,part_cost,inspection_cost,total_cost)VALUES ('Replacement of front tires',200.50,100.10,50.00
+,350.60);
+INSERT INTO repairs(description,treatment,status)VALUES ('General maintenance and repair','Replace front tires',true);

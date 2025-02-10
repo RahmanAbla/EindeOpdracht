@@ -15,33 +15,33 @@ public class CarMechanicController {
     public CarMechanicController(CarMechanicService carMechanicService) {
         this.carMechanicService = carMechanicService;
     }
-    @GetMapping("/allCarMechanics")
+    @GetMapping("/carmechanics")
     public ResponseEntity<List<CarMechanicDTO>>getAllCarMechanics() {
 
         List<CarMechanicDTO> dtos = carMechanicService.getAllCarMechanics();
 
         return ResponseEntity.ok(dtos);
     }
-    @GetMapping("/CarMechanic/{id}")
+    @GetMapping("/carmechanics/{id}")
     public ResponseEntity<CarMechanicDTO>getCarMechanicById(@PathVariable("id") Long id) throws Exception {
 
         CarMechanicDTO carMechanicDTO = carMechanicService.getCarMechanicById(id);
 
         return ResponseEntity.ok(carMechanicDTO);
     }
-    @PostMapping("/addCarMechanic")
+    @PostMapping("/carmechanics")
     public ResponseEntity<Object>  getCarMechanicsById(@RequestBody CarMechanicDTO dto) {
         CarMechanicDTO carMechanicDTO =carMechanicService.addCarMechanic(dto);
         return ResponseEntity.created(null).body(carMechanicDTO);
     }
-    @DeleteMapping("/deleteCarMechanic/{id}")
+    @DeleteMapping("/carmechanics/{id}")
     public ResponseEntity<Object> deleteCarMechanic(@PathVariable Long id) {
 
         carMechanicService.deleteCarMechanic(id);
 
         return ResponseEntity.noContent().build();
     }
-    @PutMapping("/updateCarMechanic/{id}")
+    @PutMapping("/carmechanics/{id}")
     public ResponseEntity<Object> updateCarMechanic(@PathVariable Long id, @RequestBody CarMechanicDTO newCarMechanic) throws RecordNotFoundException {
         CarMechanicDTO dto=carMechanicService.updateCarMechanic(id, newCarMechanic);
         return ResponseEntity.ok(dto);

@@ -19,7 +19,7 @@ public class InvoiceController {
     }
 
 
-    @GetMapping("/Invoices")
+    @GetMapping("/invoices")
     public ResponseEntity<List<InvoiceDTO>> getAllInvoice() {
 
         List<InvoiceDTO> dtos = invoiceService.getAllInvoices();
@@ -27,24 +27,24 @@ public class InvoiceController {
         return ResponseEntity.ok(dtos);
     }
 
-    @GetMapping("/Invoice/{id}")
+    @GetMapping("/invoices/{id}")
     public ResponseEntity<InvoiceDTO> getInvoicesById(@PathVariable("id") Long id ) throws Exception {
         InvoiceDTO invoiceDTO = invoiceService.getInvoicesById(id);
         return ResponseEntity.ok(invoiceDTO);
     }
-    @PostMapping("/Invoice")
+    @PostMapping("/invoices")
     public ResponseEntity<InvoiceDTO> addInvoice(@RequestBody InvoiceDTO dto) {
         InvoiceDTO invoiceDTO = invoiceService.addInvoice(dto);
         return ResponseEntity.created(null).body(invoiceDTO);
     }
-    @DeleteMapping("/deleteInvoice/{id}")
+    @DeleteMapping("/invoices/{id}")
     public ResponseEntity<Object> deleteInvoice(@PathVariable Long id) {
 
         invoiceService.deleteInvoice(id);
 
         return ResponseEntity.noContent().build();
     }
-    @PutMapping("/updateInvoice/{id}")
+    @PutMapping("/invoices/{id}")
     public ResponseEntity<Object> updateInvoice(@PathVariable Long id, @Valid @RequestBody InvoiceDTO newInvoice) throws RecordNotFoundException {
    InvoiceDTO dto=invoiceService.updateInvoice(id, newInvoice);
         return ResponseEntity.ok(dto);

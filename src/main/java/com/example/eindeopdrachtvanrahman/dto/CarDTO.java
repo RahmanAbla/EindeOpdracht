@@ -10,6 +10,16 @@ public class CarDTO {
     private int manufacturingyear;
     private Long id;
 
+    public CarDTO(String brand, String model, int manufacturingyear, Long id) {
+        this.brand = brand;
+        this.model = model;
+        this.manufacturingyear = manufacturingyear;
+        this.id = id;
+    }
+
+    public CarDTO() {
+    }
+
     public String getBrand() {
         return brand;
     }

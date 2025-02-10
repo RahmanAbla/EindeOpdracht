@@ -13,6 +13,7 @@ public class Car {
     private String brand;
     @Column(nullable = false)
     private String model;
+    @Column(nullable = false)
     private int manufacturingyear;
 
 
