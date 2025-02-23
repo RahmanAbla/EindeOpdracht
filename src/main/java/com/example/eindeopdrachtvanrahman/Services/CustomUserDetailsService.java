@@ -19,8 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public CustomUserDetailsService(UserServise userServise) {
         this.userServise = userServise;
     }
-    //    @Autowired
-//    private AuthorityService authorityService;
+
 
 
     @Override

@@ -46,4 +46,10 @@ public class CarMechanicController {
         CarMechanicDTO dto=carMechanicService.updateCarMechanic(id, newCarMechanic);
         return ResponseEntity.ok(dto);
     }
+    //Dit is een andere manier om het te doen, met twee Pathvariables, maar het kan uiteraard ook anders.
+    @PutMapping("/carmechanics/{id}/{garagereceptionistsid}")
+    public ResponseEntity<Object>assignGarageReseptionistToCarMechanic(@PathVariable("id") Long id, @PathVariable("garagereceptionistsid") Long garagereceptionistsid) throws RecordNotFoundException {
+        carMechanicService.assignGarageReseptionistToCarMechanic(id,garagereceptionistsid );
+        return ResponseEntity.noContent().build();
+    }
 }

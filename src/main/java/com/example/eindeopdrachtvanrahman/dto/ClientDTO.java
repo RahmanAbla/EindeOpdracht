@@ -5,6 +5,7 @@ public class ClientDTO {
     private String name;
     private int age;
     private String email;
+    private GarageReceptionistDTO garageReceptionistDTO;
 
     public Long getId() {
         return id;
@@ -36,5 +37,13 @@ public class ClientDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public GarageReceptionistDTO getGarageReceptionistDTO() {
+        return garageReceptionistDTO;
+    }
+
+    public void setGarageReceptionistDTO(GarageReceptionistDTO garageReceptionistDTO) {
+        this.garageReceptionistDTO = garageReceptionistDTO;
     }
 }

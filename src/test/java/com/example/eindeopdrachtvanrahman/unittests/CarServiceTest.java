@@ -3,17 +3,15 @@ package com.example.eindeopdrachtvanrahman.unittests;
 import com.example.eindeopdrachtvanrahman.Services.CarService;
 import com.example.eindeopdrachtvanrahman.dto.CarDTO;
 import com.example.eindeopdrachtvanrahman.dto.CarInputDto;
+import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.models.Car;
 import com.example.eindeopdrachtvanrahman.repository.CarRepository;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.swing.event.CaretListener;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -24,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-public class CarControllerTest {
+public class CarServiceTest {
 
     @Mock
     CarRepository carRepository;
@@ -40,6 +38,7 @@ public class CarControllerTest {
         CarDTO carDTO = service.getCarsById(20L);
 
         assertEquals(20L, carDTO.getId());
+
     }
 
     @Test
@@ -106,6 +105,26 @@ public class CarControllerTest {
         car.setId(10L);
         service.deleteCar(10L);
         verify(carRepository).deleteById(10L);
+    }
+    @Test
+    void shouldThrowExceptionWhenCarNotFoundById() {
+        Long invalidCarId = 999L;
+        Mockito.when(carRepository.findById(invalidCarId)).thenReturn(Optional.empty());
+
+        assertThrows(Exception.class, () -> service.getCarsById(invalidCarId), "no car found");
+    }
+
+    @Test
+    void shouldThrowRecordNotFoundExceptionWhenUpdatingNonExistentCar() {
+        Long nonExistentCarId = 999L;
+        Mockito.when(carRepository.findById(nonExistentCarId)).thenReturn(Optional.empty());
+
+        CarInputDto inputDto = new CarInputDto();
+        inputDto.setBrand("BMW");
+        inputDto.setModel("X5");
+        inputDto.setManufacturingyear(2020);
+
+        assertThrows(RecordNotFoundException.class, () -> service.updateCar(nonExistentCarId, inputDto));
     }
 
 }

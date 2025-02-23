@@ -44,8 +44,14 @@ public class ClientController {
     }
     @PutMapping("/clients/{id}")
     public ResponseEntity<Object> updateClient(@PathVariable Long id, @RequestBody ClientDTO newClient) throws RecordNotFoundException {
-     ClientDTO dto= clientService.updateClient(id, newClient);
+        ClientDTO dto= clientService.updateClient(id, newClient);
         return ResponseEntity.ok(dto);
     }
 
+    //Dit is een andere manier om het te doen, met twee Pathvariables, maar het kan uiteraard ook anders.
+    @PutMapping("/clients/{id}/{garagereceptionistsid}")
+    public ResponseEntity<Object> assignGarageReseptionistToCliet(@PathVariable("id") Long id, @PathVariable("garagereceptionistsid") Long garagereceptionistsid) throws RecordNotFoundException {
+        clientService.assignGarageReseptionistToCliet(id,garagereceptionistsid );
+        return ResponseEntity.noContent().build();
+    }
 }

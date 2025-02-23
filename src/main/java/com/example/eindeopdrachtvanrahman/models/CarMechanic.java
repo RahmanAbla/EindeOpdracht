@@ -13,6 +13,10 @@ public class CarMechanic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "garageReceptionist_id")
+    private GarageReceptionist garageReceptionist;
+
     public CarMechanic(String name, int age, String address, String email, Long id) {
         this.name = name;
         this.age=age;
@@ -64,4 +68,13 @@ public class CarMechanic {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public GarageReceptionist getGarageReceptionist() {
+        return garageReceptionist;
+    }
+
+    public void setGarageReceptionist(GarageReceptionist garageReceptionist) {
+        this.garageReceptionist = garageReceptionist;
+    }
 }
+

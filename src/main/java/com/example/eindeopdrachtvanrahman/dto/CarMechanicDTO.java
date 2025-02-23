@@ -10,6 +10,7 @@ public class CarMechanicDTO {
         private String address;
        private String email;
         private Long id;
+        private GarageReceptionistDTO garageReceptionistDTO;
 
     public int getAge() {
         return age;
@@ -50,6 +51,14 @@ public class CarMechanicDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public GarageReceptionistDTO getGarageReceptionistDTO() {
+        return garageReceptionistDTO;
+    }
+
+    public void setGarageReceptionistDTO(GarageReceptionistDTO garageReceptionistDTO) {
+        this.garageReceptionistDTO = garageReceptionistDTO;
     }
 }
 

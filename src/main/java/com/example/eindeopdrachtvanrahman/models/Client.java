@@ -11,6 +11,9 @@ public class Client {
     private String name;
     private int age;
     private String email;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "garageReceptionist_id")
+    private GarageReceptionist garageReceptionist;
 
     public Client(Long id, String name, int age, String email) {
         this.id = id;
@@ -54,4 +57,15 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public GarageReceptionist getGarageReceptionist() {
+        return garageReceptionist;
+    }
+
+    public void setGarageReceptionist(GarageReceptionist garageReceptionist) {
+        this.garageReceptionist = garageReceptionist;
+    }
 }
+
+
+

@@ -1,11 +1,9 @@
 package com.example.eindeopdrachtvanrahman.dto;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
-import org.aspectj.bridge.Message;
 
 public class CarInputDto {
    @NotNull(message = "Brand can not be emmpty")
@@ -36,8 +34,8 @@ public class CarInputDto {
         return manufacturingyear;
     }
 
-    public void setManufacturingyear(int manufacturingyear) {
-        this.manufacturingyear = manufacturingyear;
+    public void setManufacturingyear(int manufacturingYear) {
+        this.manufacturingyear = manufacturingYear;
     }
 
     public Long getId() {

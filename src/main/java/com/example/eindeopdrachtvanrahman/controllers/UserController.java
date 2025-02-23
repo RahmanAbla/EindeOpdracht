@@ -35,12 +35,24 @@ public class UserController {
         return ResponseEntity.ok().body(optionalUser);
     }
 
-    @PostMapping(value = "")
+    @PostMapping(value = "klant")
     public ResponseEntity<UserDTO> createKlant(@RequestBody UserDTO dto){;
         // Let op: het password van een nieuwe gebruiker wordt in deze code nog niet encrypted opgeslagen.
         // Je kan dus (nog) niet inloggen met een nieuwe user.
         String newUserName=userServise.createUser(dto);
-        userServise.addAuthority(newUserName,"ROLE_USER");
+        userServise.addAuthority(newUserName,"ROLE_CLIENT");
+        URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("/{username}")
+                .buildAndExpand(newUserName).toUri();
+        return ResponseEntity.created(location).build();
+    }
+
+
+    @PostMapping(value = "admin")
+    public ResponseEntity<UserDTO> createKMechanic(@RequestBody UserDTO dto){;
+        // Let op: het password van een nieuwe gebruiker wordt in deze code nog niet encrypted opgeslagen.
+        // Je kan dus (nog) niet inloggen met een nieuwe user.
+        String newUserName=userServise.createUser(dto);
+        userServise.addAuthority(newUserName,"ROLE_MECHANIC");
         URI location= ServletUriComponentsBuilder.fromCurrentRequest().path("/{username}")
                 .buildAndExpand(newUserName).toUri();
         return ResponseEntity.created(location).build();

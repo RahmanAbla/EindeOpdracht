@@ -2,6 +2,7 @@ package com.example.eindeopdrachtvanrahman.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 @Entity
 @Table(name = "garagereceptionists")
 public class GarageReceptionist {
@@ -11,6 +12,10 @@ public class GarageReceptionist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToMany(mappedBy ="garageReceptionist")
+    private List<Client> clients;
+    @OneToMany(mappedBy ="garageReceptionist")
+    private List<CarMechanic> carMechanics;
 
     public GarageReceptionist(String name, int phoneNumber, String email, Long id) {
         this.name = name;
@@ -22,7 +27,6 @@ public class GarageReceptionist {
     public GarageReceptionist() {
 
     }
-
     public String getName() {
         return name;
     }
@@ -55,3 +59,7 @@ public class GarageReceptionist {
         this.id = id;
     }
 }
+
+
+
+

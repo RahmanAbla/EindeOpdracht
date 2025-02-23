@@ -49,12 +49,14 @@ public String createUser(UserDTO userDTO){
 public void deleteUser(String username){
         userRepository.deleteById(String.valueOf(username));
 }
+
 public void updateUser(String username, UserDTO newUser) throws RecordNotFoundException {
         if (!userRepository.existsById(String.valueOf(username)) )throw new RecordNotFoundException();
         User user=userRepository.findById(String.valueOf(username)).get();
         user.setPassword(newUser.getPassword());
         userRepository.save(user);
     }
+
     public Set<Authority>getAuthorities(String username){
         if (!userRepository.existsById(String.valueOf(username)))throw new UsernameNotFoundException(username);
         User user=userRepository.findById(String.valueOf(username)).get();
@@ -97,106 +99,3 @@ public void updateUser(String username, UserDTO newUser) throws RecordNotFoundEx
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//@Service
-//public class UserServise {
-//    private final UserRepository userRepository;
-//
-//    public UserServise(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
-//public UserDTO addUser(UserDTO dto) {
-//        User user=transferToUser(dto);
-//        userRepository.save(user);
-//    return  transferToDTO(user);
-//}
-//    public List<UserDTO> getAllUsers(){
-//        List<User>userList=userRepository.findAll();
-//        List<UserDTO>userDTOList=new ArrayList<>();
-//        for (User user: userList){
-//            UserDTO dto=transferToDTO(user);
-//            userDTOList.add(dto);
-//        }
-//        return userDTOList;
-//    }
-//    public UserDTO getUserById(Long id) throws Exception {
-//            Optional<User>userOptional =userRepository.findById(id);
-//        if (userOptional.isPresent()){
-//
-//            User user1 = userOptional.get();
-//            return transferToDTO(user1);
-//        } else {
-//            throw new Exception("no user found");
-//        }
-//    }
-//
-//    public User transferToUser(UserDTO dto) {
-//        var user = new User();
-//        user.setId(dto.getId());
-//        user.setAge(dto.getAge());
-////        user.setCarMechanic(dto.getCarMechanic());
-////        user.setClient(dto.getClient());
-//        user.setEmail(dto.getEmail());
-//        user.setName(dto.getName());
-////        user.setGarageReseptionist(dto.getGarageReceptionist());
-//
-//        return user;
-//    }
-//
-//    public UserDTO transferToDTO(User user) {
-//        UserDTO dto = new UserDTO();
-//        dto.setId(user.getId());
-//        dto.setAge(user.getAge());
-////        dto.setCarMechanic(user.getCarMechanic());
-////        dto.setClient(user.getClient());
-////        dto.setClient(user.getClient());
-//        dto.setName(user.getName());
-////        dto.setGarageReceptionist(user.getGarageReseptionist());
-//        return dto;
-//    }
-//
-//    public UserDTO getUser(Long id) {
-//        return null;
-//    }
-//
-//    public UserDTO updateuser(Long id, UserDTO userDTO) throws RecordNotFoundException {
-//
-//        if (userRepository.findById(id).isPresent()) {
-//
-//            User user = userRepository.findById(id).get();
-//
-//            User user1 = transferToUser(userDTO);
-//            user1.setId(user.getId());
-//
-//            userRepository.save(user1);
-//
-//            return transferToDTO(user1);
-//
-//        } else {
-//
-//            throw new RecordNotFoundException(" No found User");
-//
-//        }
-
-//    }
-//
-//    public void deleteUser(@RequestBody Long id) {
-//
-//        userRepository.deleteById(id);
-//
-//    }
-//}

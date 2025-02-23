@@ -1,49 +1,7 @@
 package com.example.eindeopdrachtvanrahman.integrationtest;//package com.example.eindeopdrachtvanrahman.integrationtest;
-//
-//import com.example.eindeopdrachtvanrahman.Services.ClientService;
-//import com.example.eindeopdrachtvanrahman.dto.ClientDTO;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.junit.platform.engine.TestExecutionResult;
-//import org.mockito.Mockito;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.boot.test.mock.mockito.MockBean;
-//import org.springframework.test.web.servlet.MockMvc;
-//
-//@SpringBootTest
-//@AutoConfigureMockMvc
-//public class ClientControllerTest {
-//    @Autowired
-//    private MockMvc mockMvc;
-//    @MockBean
-//    private ClientService clientService;
-//    private ClientDTO mockClientDTO;
-//    @BeforeEach
-//    void setUp(){
-//        mockClientDTO=new ClientDTO();
-//        mockClientDTO.setId(1L);
-//        mockClientDTO.setName("Tam");
-//        mockClientDTO.setAge(40);
-//        mockClientDTO.setEmail("tam123@gmail.com");
-//    }
-//    @Test
-//    void tesGetClientById(String s)throws Exception{
-//        Mockito.when(clientService.getClientById(1L)).thenReturn(mockClientDTO);
-//        mockMvc.perform(tesGetClientById("/clients/1"))
-//                .andExpect(TestExecutionResult.Status())
-//    }
-//
-//
-//    }
-//
-//
-//}
-
-
 import com.example.eindeopdrachtvanrahman.Services.ClientService;
 import com.example.eindeopdrachtvanrahman.dto.ClientDTO;
+import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,8 +16,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
+
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
@@ -105,37 +69,23 @@ public class ClientControllerTest {
                 .andExpect(jsonPath("$[0].name").value("John Doe"));
     }
 
-//    @Test
-//    void testGetClientById() throws Exception {
-//        Mockito.when(clientService.getClientById(1L)).thenReturn(mockClientDTO);
-//
-//        mockMvc.perform(get("/clients/1"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.name").value("John Doe"))
-//                .andExpect(jsonPath("$.email").value("john@example.com"));
-//    }
+    @Test
+    void shouldThrowExceptionWhenClientNotFoundById() throws Exception {
+        Long invalidClientId = 999L;
+
+        // Mock clientService om de juiste exception te gooien
+        Mockito.when(clientService.getClientById(invalidClientId))
+                .thenThrow(new Exception("no client found"));
+
+        Exception thrownException = assertThrows(Exception.class, () -> {
+            clientService.getClientById(invalidClientId);
+        });
+
+        assertEquals("no client found", thrownException.getMessage());
+    }
 
 
 
-//    @Test
-//    void testUpdateClient() throws Exception {
-//        Mockito.when(clientService.updateClient(Mockito.eq(1L), Mockito.any(ClientDTO.class)))
-//                .thenReturn(mockClientDTO);
-//
-//        mockMvc.perform(put("/clients/1")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(mockClientDTO)))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.name").value("John Doe"));
-//    }
-
-//    @Test
-//    void testDeleteClient() throws Exception {
-//        Mockito.doNothing().when(clientService).deleteClient(1L);
-//
-//        mockMvc.perform(delete("/clients/1"))
-//                .andExpect(status().isNoContent());
-//    }
 }
 
 

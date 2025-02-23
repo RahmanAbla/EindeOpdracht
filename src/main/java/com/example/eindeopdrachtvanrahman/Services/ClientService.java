@@ -4,6 +4,7 @@ import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.ClientDTO;
 import com.example.eindeopdrachtvanrahman.models.Client;
 import com.example.eindeopdrachtvanrahman.repository.ClientRepository;
+import com.example.eindeopdrachtvanrahman.repository.GarageReseptionistRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -11,12 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
+    private GarageReseptionistRepository garageReseptionistRepository;
+    private  GarageReceptionistService garageReceptionistService;
 
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, GarageReseptionistRepository
+            garageReseptionistRepository, GarageReceptionistService garageReceptionistService) {
         this.clientRepository = clientRepository;
+        this.garageReseptionistRepository = garageReseptionistRepository;
+        this.garageReceptionistService = garageReceptionistService;
     }
 
     public List<ClientDTO> getAllClients(){
@@ -29,12 +36,17 @@ public class ClientService {
         return clientDTOList;
     }
     public ClientDTO getClientById(Long id) throws Exception {
-            Optional<Client> clientOptional = clientRepository.findById(id);
+        Optional<Client> clientOptional = clientRepository.findById(id);
         if (clientOptional.isPresent()){
             Client client1 = clientOptional.get();
+            ClientDTO dto=transferToDTO(client1);
+            if(client1.getGarageReceptionist()!=null){
+                dto.setGarageReceptionistDTO(garageReceptionistService.transferToDTO(client1.getGarageReceptionist()));
+
+            }
             return transferToDTO(client1);
         } else {
-            throw new Exception("no client found");
+            throw new RecordNotFoundException();
         }
     }
 
@@ -48,11 +60,16 @@ public class ClientService {
         return client;
     }
     public ClientDTO transferToDTO(Client client){
-            ClientDTO dto=new ClientDTO();
+        ClientDTO dto=new ClientDTO();
         dto.setId(client.getId());
         dto.setAge(client.getAge());
         dto.setEmail(client.getEmail());
         dto.setName(client.getName());
+        if (client.getGarageReceptionist()!=null){
+
+         dto.setGarageReceptionistDTO(garageReceptionistService.transferToDTO(client.getGarageReceptionist()));
+
+        }
         return dto;
     }
     public ClientDTO addClient(ClientDTO dto) {
@@ -69,6 +86,7 @@ public class ClientService {
             Client client1 = transferToClient(clientDTO);
             client1.setId(client.getId());
 
+
             clientRepository.save(client1);
 
             return transferToDTO(client1);
@@ -76,7 +94,6 @@ public class ClientService {
         } else {
 
             throw new RecordNotFoundException();
-
         }
     }
     public void deleteClient(@RequestBody Long id) {
@@ -84,4 +101,20 @@ public class ClientService {
         clientRepository.deleteById(id);
 
     }
+
+    public void assignGarageReseptionistToCliet(Long id, Long garageReseptionistId) throws RecordNotFoundException {
+        var optionalClient = clientRepository.findById(id);
+        var optionalGarageReseptionist = garageReseptionistRepository.findById(garageReseptionistId);
+
+        if(optionalClient.isPresent() && optionalGarageReseptionist.isPresent()) {
+            var client= optionalClient.get();
+            var garageReseptionist = optionalGarageReseptionist.get();
+
+            client.setGarageReceptionist(garageReseptionist);
+            clientRepository.save(client);
+        } else {
+            throw new RecordNotFoundException();
+        }
+    }
+
 }
