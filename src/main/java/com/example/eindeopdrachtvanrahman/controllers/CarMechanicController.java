@@ -3,6 +3,7 @@ package com.example.eindeopdrachtvanrahman.controllers;
 import com.example.eindeopdrachtvanrahman.Services.CarMechanicService;
 import com.example.eindeopdrachtvanrahman.dto.CarMechanicDTO;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 @RestController
 public class CarMechanicController {
-    private CarMechanicService carMechanicService;
+    private final CarMechanicService carMechanicService;
 
     public CarMechanicController(CarMechanicService carMechanicService) {
         this.carMechanicService = carMechanicService;
@@ -51,5 +52,10 @@ public class CarMechanicController {
     public ResponseEntity<Object>assignGarageReseptionistToCarMechanic(@PathVariable("id") Long id, @PathVariable("garagereceptionistsid") Long garagereceptionistsid) throws RecordNotFoundException {
         carMechanicService.assignGarageReseptionistToCarMechanic(id,garagereceptionistsid );
         return ResponseEntity.noContent().build();
+    }
+    @PutMapping("/carmechanics/{id}/{nameOfImage}")
+    @Transactional
+    public void assignImageToCarMechanic(@PathVariable("id") Long id, @PathVariable("nameOfImage") String nameOfImage) throws RecordNotFoundException {
+        carMechanicService.assignImageToCarMechanic(id, nameOfImage);
     }
 }

@@ -17,6 +17,10 @@ public class CarMechanic {
     @JoinColumn(name = "garageReceptionist_id")
     private GarageReceptionist garageReceptionist;
 
+    @OneToOne()
+    @JoinColumn(name = "imageData")
+    private ImageData imageData;
+
     public CarMechanic(String name, int age, String address, String email, Long id) {
         this.name = name;
         this.age=age;
@@ -27,6 +31,14 @@ public class CarMechanic {
 
     public CarMechanic() {
 
+    }
+
+    public ImageData getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(ImageData imageData) {
+        this.imageData = imageData;
     }
 
     public String getName() {

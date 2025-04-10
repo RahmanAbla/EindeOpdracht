@@ -3,8 +3,10 @@ package com.example.eindeopdrachtvanrahman.Services;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.CarMechanicDTO;
 import com.example.eindeopdrachtvanrahman.models.CarMechanic;
+import com.example.eindeopdrachtvanrahman.models.ImageData;
 import com.example.eindeopdrachtvanrahman.repository.CarMechanicRepository;
 import com.example.eindeopdrachtvanrahman.repository.GarageReseptionistRepository;
+import com.example.eindeopdrachtvanrahman.repository.ImageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -15,15 +17,17 @@ import java.util.Optional;
 @Service
 public class CarMechanicService {
     private final CarMechanicRepository carMechanicRepository;
-    private GarageReseptionistRepository garageReseptionistRepository;
-    private  GarageReceptionistService garageReceptionistService;
+    private final GarageReseptionistRepository garageReseptionistRepository;
+    private final   GarageReceptionistService garageReceptionistService;
+    private final ImageRepository imageRepository;
 
-    public CarMechanicService(CarMechanicRepository carMechanicRepository, GarageReseptionistRepository garageReseptionistRepository,
-                              GarageReceptionistService garageReceptionistService) {
+    public CarMechanicService(CarMechanicRepository carMechanicRepository, GarageReseptionistRepository garageReseptionistRepository, GarageReceptionistService garageReceptionistService, ImageRepository imageRepository) {
         this.carMechanicRepository = carMechanicRepository;
         this.garageReseptionistRepository = garageReseptionistRepository;
         this.garageReceptionistService = garageReceptionistService;
+        this.imageRepository = imageRepository;
     }
+
 
     public List<CarMechanicDTO>getAllCarMechanics(){
         List<CarMechanic>carMechanicList=carMechanicRepository.findAll();
@@ -111,4 +115,19 @@ return carMechanic;
             throw new RecordNotFoundException();
         }
     }
+    public void assignImageToCarMechanic(Long id, String nameOfImage) throws RecordNotFoundException {
+        Optional<CarMechanic> carMechanic = carMechanicRepository.findById(id);
+        Optional<ImageData> imageData = Optional.ofNullable(imageRepository.findByNameOfImage(nameOfImage));
+
+        if (carMechanic.isPresent() && imageData.isPresent()){
+            CarMechanic carMechanic1 =carMechanic.get();
+            ImageData imageData1 = imageData.get();
+
+            carMechanic1.setImageData(imageData1);
+            carMechanicRepository.save(carMechanic1);
+        } else {
+            throw new RecordNotFoundException();
+        }
+    }
+
 }

@@ -60,6 +60,8 @@ public class SpringSecurityConfig {
                                         .requestMatchers( "/cars").hasRole("ADMIN")
                                         .requestMatchers( "/cars/**").hasAnyRole("ADMIN","MECHANIC")
                                         .requestMatchers("carmechanics").hasRole("ADMIN")
+                                        .requestMatchers("/image").hasAnyRole("ADMIN","MECHANIC")
+                                        .requestMatchers("/image/**").hasAnyRole("ADMIN","MECHANIC")
                                         .requestMatchers("carmechanics/**").hasRole("ADMIN")
                                         .requestMatchers("clients").hasRole("ADMIN")
                                         .requestMatchers("clients/**").hasRole("ADMIN")

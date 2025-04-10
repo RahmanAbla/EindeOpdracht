@@ -12,6 +12,7 @@ public class CarMechanicDTO {
         private Long id;
         private GarageReceptionistDTO garageReceptionistDTO;
 
+
     public int getAge() {
         return age;
     }
