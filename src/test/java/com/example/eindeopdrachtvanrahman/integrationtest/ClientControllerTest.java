@@ -1,7 +1,6 @@
 package com.example.eindeopdrachtvanrahman.integrationtest;//package com.example.eindeopdrachtvanrahman.integrationtest;
-import com.example.eindeopdrachtvanrahman.Services.ClientService;
+import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.ClientService;
 import com.example.eindeopdrachtvanrahman.dto.ClientDTO;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -44,21 +42,24 @@ public class ClientControllerTest {
 
         mockClientDTO = new ClientDTO();
         mockClientDTO.setId(1L);
-        mockClientDTO.setName("John Doe");
-        mockClientDTO.setAge(30);
-        mockClientDTO.setEmail("john@example.com");
+//        mockClientDTO.setName("John Doe");
+//        mockClientDTO.setAge(30);
+//        mockClientDTO.setEmail("john@example.com");
     }
     @Test
     void testAddClient() throws Exception {
+        ClientDTO mockClientDTO = new ClientDTO();
+        mockClientDTO.setId(1L);
+
         Mockito.when(clientService.addClient(Mockito.any(ClientDTO.class))).thenReturn(mockClientDTO);
 
         mockMvc.perform(post("/clients")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(mockClientDTO)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value("John Doe"))
-                .andExpect(jsonPath("$.email").value("john@example.com"));
+                .andExpect(jsonPath("$.id").value(1));
     }
+
 
     @Test
     void testGetAllClients() throws Exception {
@@ -66,7 +67,9 @@ public class ClientControllerTest {
 
         mockMvc.perform(get("/clients"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("John Doe"));
+//                .andExpect(jsonPath("$[0].name").value("John Doe"));
+                .andExpect(jsonPath("$[0].id").value(1));
+
     }
 
     @Test

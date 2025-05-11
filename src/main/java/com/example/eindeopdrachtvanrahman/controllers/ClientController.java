@@ -1,6 +1,6 @@
 package com.example.eindeopdrachtvanrahman.controllers;
 
-import com.example.eindeopdrachtvanrahman.Services.ClientService;
+import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.ClientService;
 
 import com.example.eindeopdrachtvanrahman.dto.ClientDTO;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
@@ -53,5 +53,10 @@ public class ClientController {
     public ResponseEntity<Object> assignGarageReseptionistToCliet(@PathVariable("id") Long id, @PathVariable("garagereceptionistsid") Long garagereceptionistsid) throws RecordNotFoundException {
         clientService.assignGarageReseptionistToCliet(id,garagereceptionistsid );
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/clients/users/{id}/{userName}")
+    public void assignUserToCliet(@PathVariable("id") Long id, @PathVariable("userName") String userName) throws RecordNotFoundException {
+        clientService.assignUserToClient(id, userName);
     }
 }

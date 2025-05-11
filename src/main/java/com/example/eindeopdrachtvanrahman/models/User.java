@@ -14,14 +14,6 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @OneToMany(
-            targetEntity = Authority.class,
-            mappedBy = "username",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.EAGER)
-    private Set<Authority> authorities = new HashSet<>();
-
     // Deze 3 variabelen zijn niet verplicht.
     // Je mag ook een "String banaan;" toevoegen, als je dat graag wilt.
     @Column(nullable = false)
@@ -32,6 +24,20 @@ public class User {
 
     @Column
     private String email;
+
+    @OneToMany(
+            targetEntity = Authority.class,
+            mappedBy = "username",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER)
+    private Set<Authority> authorities = new HashSet<>();
+
+    @OneToOne(mappedBy = "user")
+    CarMechanic carMechanic;
+
+    @OneToOne(mappedBy = "user")
+    Client client;
 
     public String getUsername() { return username; }
     public void setUsername(String username) {
@@ -58,6 +64,21 @@ public class User {
         this.authorities.remove(authority);
     }
 
+    public CarMechanic getCarMechanic() {
+        return carMechanic;
+    }
+
+    public void setCarMechanic(CarMechanic carMechanic) {
+        this.carMechanic = carMechanic;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 }
 
 

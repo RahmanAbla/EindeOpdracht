@@ -1,8 +1,8 @@
-package com.example.eindeopdrachtvanrahman.Services;
+package com.example.eindeopdrachtvanrahman.sequence_diagram.Services;
 
+import com.example.eindeopdrachtvanrahman.models.Inspection;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.InspectionDTO;
-import com.example.eindeopdrachtvanrahman.models.Inspection;
 import com.example.eindeopdrachtvanrahman.repository.InspectionRepository;
 import org.springframework.stereotype.Service;
 

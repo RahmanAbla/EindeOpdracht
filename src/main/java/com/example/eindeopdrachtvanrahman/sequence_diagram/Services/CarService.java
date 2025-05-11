@@ -1,9 +1,9 @@
-package com.example.eindeopdrachtvanrahman.Services;
+package com.example.eindeopdrachtvanrahman.sequence_diagram.Services;
 
+import com.example.eindeopdrachtvanrahman.models.Car;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.CarDTO;
 import com.example.eindeopdrachtvanrahman.dto.CarInputDto;
-import com.example.eindeopdrachtvanrahman.models.Car;
 import com.example.eindeopdrachtvanrahman.repository.CarRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;

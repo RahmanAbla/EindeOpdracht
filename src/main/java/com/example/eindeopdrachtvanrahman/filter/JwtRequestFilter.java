@@ -1,6 +1,6 @@
 package com.example.eindeopdrachtvanrahman.filter;
 
-import com.example.eindeopdrachtvanrahman.Services.CustomUserDetailsService;
+import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.CustomUserDetailsService;
 import com.example.eindeopdrachtvanrahman.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

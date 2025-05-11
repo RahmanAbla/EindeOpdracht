@@ -1,10 +1,9 @@
 package com.example.eindeopdrachtvanrahman.controllers;
 
-import com.example.eindeopdrachtvanrahman.Services.CustomUserDetailsService;
+import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.CustomUserDetailsService;
 import com.example.eindeopdrachtvanrahman.dto.AuthenticationRequestDTO;
 import com.example.eindeopdrachtvanrahman.dto.AuthenticationResponseDTO;
 import com.example.eindeopdrachtvanrahman.utils.JwtUtil;
-import org.hibernate.validator.internal.engine.messageinterpolation.TermResolver;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

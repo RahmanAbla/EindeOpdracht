@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 public class CarInputDto {
    @NotNull(message = "Brand can not be emmpty")
     private String brand;
-    @NotNull(message = "Brand can not be emmpty")
+    @NotNull(message = "model can not be emmpty")
     private String model;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

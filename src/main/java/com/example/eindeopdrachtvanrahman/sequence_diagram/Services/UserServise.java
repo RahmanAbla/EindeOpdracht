@@ -1,11 +1,12 @@
-package com.example.eindeopdrachtvanrahman.Services;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
-import com.example.eindeopdrachtvanrahman.dto.UserDTO;
+package com.example.eindeopdrachtvanrahman.sequence_diagram.Services;
 import com.example.eindeopdrachtvanrahman.models.Authority;
 import com.example.eindeopdrachtvanrahman.models.User;
+import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
+import com.example.eindeopdrachtvanrahman.dto.UserDTO;
 import com.example.eindeopdrachtvanrahman.repository.UserRepository;
 import com.example.eindeopdrachtvanrahman.utils.RandomStringGenerator;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,9 +17,11 @@ import java.util.Set;
 @Service
 public class UserServise {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public <UserDto> UserServise(UserRepository userRepository) {
+    public <UserDto> UserServise(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
     public List<UserDTO>getUsers(){
         List<UserDTO>collection=new ArrayList<>();
@@ -42,6 +45,7 @@ public class UserServise {
     }
 public String createUser(UserDTO userDTO){
         String randomString= RandomStringGenerator.generateAlphaNumeric(20);
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userDTO.setApikey(randomString);
         User newUser=userRepository.save(toUser(userDTO));
         return newUser.getUsername();
@@ -69,6 +73,7 @@ public void updateUser(String username, UserDTO newUser) throws RecordNotFoundEx
         user.addAuthority((new Authority(username,authority)));
         userRepository.save(user);
     }
+
     public void removeAuthority(String username, String authority ){
         if (!userRepository.existsById(String.valueOf(username)))throw new UsernameNotFoundException(username);
         User user=userRepository.findById(String.valueOf(username)).get();

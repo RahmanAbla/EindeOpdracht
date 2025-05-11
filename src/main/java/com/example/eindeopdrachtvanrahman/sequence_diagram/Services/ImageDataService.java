@@ -1,4 +1,4 @@
-package com.example.eindeopdrachtvanrahman.Services;
+package com.example.eindeopdrachtvanrahman.sequence_diagram.Services;
 
 import com.example.eindeopdrachtvanrahman.dto.ImageDataDto;
 import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
@@ -8,7 +8,6 @@ import com.example.eindeopdrachtvanrahman.models.ImageData;
 import com.example.eindeopdrachtvanrahman.repository.ClientRepository;
 import com.example.eindeopdrachtvanrahman.repository.ImageRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import org.hibernate.engine.spi.Resolution;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

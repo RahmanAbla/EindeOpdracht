@@ -1,7 +1,7 @@
-package com.example.eindeopdrachtvanrahman.Services;
+package com.example.eindeopdrachtvanrahman.sequence_diagram.Services;
 
-import com.example.eindeopdrachtvanrahman.dto.UserDTO;
 import com.example.eindeopdrachtvanrahman.models.Authority;
+import com.example.eindeopdrachtvanrahman.dto.UserDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

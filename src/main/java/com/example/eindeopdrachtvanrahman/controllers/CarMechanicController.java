@@ -1,6 +1,6 @@
 package com.example.eindeopdrachtvanrahman.controllers;
 
-import com.example.eindeopdrachtvanrahman.Services.CarMechanicService;
+import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.CarMechanicService;
 import com.example.eindeopdrachtvanrahman.dto.CarMechanicDTO;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import jakarta.transaction.Transactional;
@@ -16,7 +16,7 @@ public class CarMechanicController {
     public CarMechanicController(CarMechanicService carMechanicService) {
         this.carMechanicService = carMechanicService;
     }
-    @GetMapping("/carmechanics")
+    @GetMapping("/carmechanics/get")
     public ResponseEntity<List<CarMechanicDTO>>getAllCarMechanics() {
 
         List<CarMechanicDTO> dtos = carMechanicService.getAllCarMechanics();
@@ -30,8 +30,8 @@ public class CarMechanicController {
 
         return ResponseEntity.ok(carMechanicDTO);
     }
-    @PostMapping("/carmechanics")
-    public ResponseEntity<Object>  getCarMechanicsById(@RequestBody CarMechanicDTO dto) {
+    @PostMapping("/carmechanics/add")
+    public ResponseEntity<Object> addCarMechanicsById(@RequestBody CarMechanicDTO dto) {
         CarMechanicDTO carMechanicDTO =carMechanicService.addCarMechanic(dto);
         return ResponseEntity.created(null).body(carMechanicDTO);
     }
@@ -53,9 +53,14 @@ public class CarMechanicController {
         carMechanicService.assignGarageReseptionistToCarMechanic(id,garagereceptionistsid );
         return ResponseEntity.noContent().build();
     }
-    @PutMapping("/carmechanics/{id}/{nameOfImage}")
+    @PutMapping("/carmechanics/{id}/image/{nameOfImage}")
     @Transactional
     public void assignImageToCarMechanic(@PathVariable("id") Long id, @PathVariable("nameOfImage") String nameOfImage) throws RecordNotFoundException {
         carMechanicService.assignImageToCarMechanic(id, nameOfImage);
+    }
+
+    @PutMapping("/carmechanics/user/{id}/{userName}")
+    public void assignUserToCarMechanic(@PathVariable("id") Long id, @PathVariable("userName") String userName) throws RecordNotFoundException {
+        carMechanicService.assignUserToCarMechanic(id,userName);
     }
 }

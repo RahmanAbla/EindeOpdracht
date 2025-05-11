@@ -1,6 +1,6 @@
 package com.example.eindeopdrachtvanrahman.controllers;
 
-import com.example.eindeopdrachtvanrahman.Services.InspectionServise;
+import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.InspectionServise;
 
 import com.example.eindeopdrachtvanrahman.dto.InspectionDTO;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;

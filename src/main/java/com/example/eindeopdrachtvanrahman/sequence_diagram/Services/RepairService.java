@@ -1,8 +1,8 @@
-package com.example.eindeopdrachtvanrahman.Services;
+package com.example.eindeopdrachtvanrahman.sequence_diagram.Services;
 
+import com.example.eindeopdrachtvanrahman.models.Repair;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.RepairDTO;
-import com.example.eindeopdrachtvanrahman.models.Repair;
 import com.example.eindeopdrachtvanrahman.repository.RepairRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;

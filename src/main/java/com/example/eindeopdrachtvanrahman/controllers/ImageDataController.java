@@ -1,9 +1,8 @@
 package com.example.eindeopdrachtvanrahman.controllers;
 
-import com.example.eindeopdrachtvanrahman.Services.CarMechanicService;
-import com.example.eindeopdrachtvanrahman.Services.ImageDataService;
+import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.CarMechanicService;
+import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.ImageDataService;
 import com.example.eindeopdrachtvanrahman.dto.ImageDataDto;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.example.eindeopdrachtvanrahman.controllers;
 
 
-import com.example.eindeopdrachtvanrahman.Services.UserServise;
+import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.UserServise;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.UserDTO;
 import org.apache.coyote.BadRequestException;

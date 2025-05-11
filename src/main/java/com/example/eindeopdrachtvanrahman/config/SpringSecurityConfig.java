@@ -1,6 +1,6 @@
 package com.example.eindeopdrachtvanrahman.config;
 
-import com.example.eindeopdrachtvanrahman.Services.CustomUserDetailsService;
+import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.CustomUserDetailsService;
 import com.example.eindeopdrachtvanrahman.filter.JwtRequestFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,11 +9,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.AuthorizeHttpRequestsDsl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -28,13 +26,6 @@ public class SpringSecurityConfig {
         this.customUserDetailsService = customUserDetailsService;
         this.jwtRequestFilter = jwtRequestFilter;
     }
-
-    // PasswordEncoderBean. Deze kun je overal in je applicatie injecteren waar nodig.
-    // Je kunt dit ook in een aparte configuratie klasse zetten.
-   @Bean
-   public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-   }
 
    // authenticatie met customUserDetailsService en PasswordEncoder
     @Bean
@@ -57,24 +48,25 @@ public class SpringSecurityConfig {
                                 auth
                                         // Wanneer je deze uncomments, staat je hele security open. Je hebt dan alleen nog een jwt nodig.
 //                .requestMatchers("/**").permitAll()
-                                        .requestMatchers( "/cars").hasRole("ADMIN")
+                                        .requestMatchers( "/cars").hasRole("MECHANIC")
                                         .requestMatchers( "/cars/**").hasAnyRole("ADMIN","MECHANIC")
-                                        .requestMatchers("carmechanics").hasRole("ADMIN")
+                                        .requestMatchers("carmechanics").hasRole("MECHANIC")
                                         .requestMatchers("/image").hasAnyRole("ADMIN","MECHANIC")
                                         .requestMatchers("/image/**").hasAnyRole("ADMIN","MECHANIC")
-                                        .requestMatchers("carmechanics/**").hasRole("ADMIN")
-                                        .requestMatchers("clients").hasRole("ADMIN")
-                                        .requestMatchers("clients/**").hasRole("ADMIN")
-                                        .requestMatchers("garagereceptionists").hasRole("ADMIN")
-                                        .requestMatchers("garagereceptionists/**").hasRole("ADMIN")
-                                        .requestMatchers("inspections").hasRole("ADMIN")
+                                        .requestMatchers("carmechanics/**").hasRole("MECHANIC")
+                                        .requestMatchers("clients").hasRole("MECHANIC")
+                                        .requestMatchers("clients/**").hasRole("MECHANIC")
+                                        .requestMatchers("clients/users/**").hasRole("MECHANIC")
+                                        .requestMatchers("garagereceptionists").hasRole("MECHANIC")
+                                        .requestMatchers("garagereceptionists/**").hasAnyRole("ADMIN","MECHANIC")
+                                        .requestMatchers("inspections").hasRole("MECHANIC")
                                         .requestMatchers("inspections/**").hasRole("MECHANIC")
                                         .requestMatchers("repairs").hasRole("MECHANIC")
                                         .requestMatchers("repairs/**").hasRole("MECHANIC")
                                         .requestMatchers("invoices").hasRole("MECHANIC")
-                                        .requestMatchers("invoices/**").hasRole("ADMIN")
-                                        .requestMatchers("users").hasRole("ADMIN")
-                                        .requestMatchers("users/**").hasRole("ADMIN")
+                                        .requestMatchers("invoices/**").hasAnyRole("ADMIN","MECHANIC")
+                                        .requestMatchers("users").hasRole("MECHANIC")
+                                        .requestMatchers("users/**").hasRole("MECHANIC")
                                         .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
                                         .requestMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
                                         .requestMatchers(HttpMethod.POST,"/users/**").hasRole("ADMIN")
