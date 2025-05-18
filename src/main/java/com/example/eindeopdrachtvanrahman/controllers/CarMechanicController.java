@@ -1,6 +1,6 @@
 package com.example.eindeopdrachtvanrahman.controllers;
 
-import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.CarMechanicService;
+import com.example.eindeopdrachtvanrahman.Services.CarMechanicService;
 import com.example.eindeopdrachtvanrahman.dto.CarMechanicDTO;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import jakarta.transaction.Transactional;

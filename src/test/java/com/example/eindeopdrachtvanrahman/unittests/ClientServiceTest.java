@@ -2,8 +2,8 @@ package com.example.eindeopdrachtvanrahman.unittests;
 
 //import Services.ClientService;
 //import Services.GarageReceptionistService;
-import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.ClientService;
-import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.GarageReceptionistService;
+import com.example.eindeopdrachtvanrahman.Services.ClientService;
+import com.example.eindeopdrachtvanrahman.Services.GarageReceptionistService;
 import com.example.eindeopdrachtvanrahman.dto.*;
 import com.example.eindeopdrachtvanrahman.models.Client;
 import com.example.eindeopdrachtvanrahman.models.GarageReceptionist;

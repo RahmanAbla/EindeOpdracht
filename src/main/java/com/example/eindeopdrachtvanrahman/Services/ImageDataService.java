@@ -1,4 +1,4 @@
-package com.example.eindeopdrachtvanrahman.sequence_diagram.Services;
+package com.example.eindeopdrachtvanrahman.Services;
 
 import com.example.eindeopdrachtvanrahman.dto.ImageDataDto;
 import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;

@@ -1,7 +1,7 @@
 package com.example.eindeopdrachtvanrahman.controllers;
 
 
-import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.RepairService;
+import com.example.eindeopdrachtvanrahman.Services.RepairService;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.RepairDTO;
 import jakarta.validation.Valid;

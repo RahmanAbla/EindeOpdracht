@@ -1,6 +1,6 @@
 package com.example.eindeopdrachtvanrahman.controllers;
 
-import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.ClientService;
+import com.example.eindeopdrachtvanrahman.Services.ClientService;
 
 import com.example.eindeopdrachtvanrahman.dto.ClientDTO;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;

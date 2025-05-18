@@ -1,6 +1,6 @@
 package com.example.eindeopdrachtvanrahman.controllers;
 
-import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.GarageReceptionistService;
+import com.example.eindeopdrachtvanrahman.Services.GarageReceptionistService;
 import com.example.eindeopdrachtvanrahman.dto.GarageReceptionistDTO;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import org.springframework.http.ResponseEntity;

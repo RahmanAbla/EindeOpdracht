@@ -1,5 +1,5 @@
 package com.example.eindeopdrachtvanrahman.integrationtest;//package com.example.eindeopdrachtvanrahman.integrationtest;
-import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.ClientService;
+import com.example.eindeopdrachtvanrahman.Services.ClientService;
 import com.example.eindeopdrachtvanrahman.dto.ClientDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

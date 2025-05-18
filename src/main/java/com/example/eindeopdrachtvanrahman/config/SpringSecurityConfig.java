@@ -1,6 +1,6 @@
 package com.example.eindeopdrachtvanrahman.config;
 
-import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.CustomUserDetailsService;
+import com.example.eindeopdrachtvanrahman.Services.CustomUserDetailsService;
 import com.example.eindeopdrachtvanrahman.filter.JwtRequestFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

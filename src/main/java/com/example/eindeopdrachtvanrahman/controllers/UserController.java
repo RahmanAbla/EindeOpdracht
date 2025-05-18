@@ -1,7 +1,7 @@
 package com.example.eindeopdrachtvanrahman.controllers;
 
 
-import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.UserServise;
+import com.example.eindeopdrachtvanrahman.Services.UserServise;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.UserDTO;
 import org.apache.coyote.BadRequestException;
@@ -99,63 +99,3 @@ public class UserController {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//oud usercontroller
-//@RestController
-//public class UserController {
-//    private final UserServise userServise;
-//
-//    public UserController(UserServise userServise) {
-//        this.userServise = userServise;
-//    }
-//
-//    @GetMapping("/allUsers")
-//    public ResponseEntity<List<UserDTO>> getAllUsers() {
-//
-//        List<UserDTO> dtos = userServise.getAllUsers();
-//
-//        return ResponseEntity.ok(dtos);
-//    }
-//
-//    @GetMapping("/User/{id}")
-//    public ResponseEntity<UserDTO>getUserById(@PathVariable("id") Long id) throws Exception {
-//
-//        UserDTO userDTO = userServise.getUserById(id);
-//
-//        return ResponseEntity.ok(userDTO);
-//    }
-//
-//    @PostMapping("/addUser")
-//    public ResponseEntity<Object> addUser(@RequestBody UserDTO dto) {
-//        UserDTO userDTO = userServise.addUser(dto);
-//        return ResponseEntity.created(null).body(userDTO);
-//    }
-//
-//    @DeleteMapping("/deleteUser/{id}")
-//    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
-//
-//        userServise.deleteUser(id);
-//
-//        return ResponseEntity.noContent().build();
-//    }
-//    @PutMapping("/updateUser/{id}")
-//    public ResponseEntity<Object> updateuser(@PathVariable Long id, @RequestBody UserDTO newUser) throws RecordNotFoundException {
-//      UserDTO dto= userServise.updateuser(id, newUser);
-//        return ResponseEntity.ok(dto);
-//    }

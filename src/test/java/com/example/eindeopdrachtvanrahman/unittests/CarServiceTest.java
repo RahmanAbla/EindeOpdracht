@@ -1,6 +1,6 @@
 package com.example.eindeopdrachtvanrahman.unittests;
 
-import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.CarService;
+import com.example.eindeopdrachtvanrahman.Services.CarService;
 import com.example.eindeopdrachtvanrahman.dto.CarDTO;
 import com.example.eindeopdrachtvanrahman.dto.CarInputDto;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;

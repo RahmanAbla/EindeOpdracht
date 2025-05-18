@@ -1,6 +1,6 @@
 package com.example.eindeopdrachtvanrahman.controllers;
 
-import com.example.eindeopdrachtvanrahman.sequence_diagram.Services.InvoiceService;
+import com.example.eindeopdrachtvanrahman.Services.InvoiceService;
 import com.example.eindeopdrachtvanrahman.dto.InvoiceDTO;
 import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import jakarta.validation.Valid;
