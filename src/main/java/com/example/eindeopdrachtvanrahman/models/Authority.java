@@ -3,6 +3,7 @@ package com.example.eindeopdrachtvanrahman.models;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+
 @Entity
 @IdClass(AuthorityKey.class)
 @Table(name = "authorities")
@@ -15,7 +16,8 @@ public class Authority implements Serializable {
     @Column(nullable = false)
     private String authority;
 
-    public Authority() {}
+    public Authority() {
+    }
 
     public Authority(String username, String authority) {
         this.username = username;

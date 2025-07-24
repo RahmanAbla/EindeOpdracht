@@ -1,7 +1,7 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
+import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.models.Client;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.ClientDTO;
 import com.example.eindeopdrachtvanrahman.models.User;
 import com.example.eindeopdrachtvanrahman.repository.ClientRepository;
@@ -29,21 +29,22 @@ public class ClientService {
         this.userRepository = userRepository;
     }
 
-    public List<ClientDTO> getAllClients(){
-        List<Client>clientList=clientRepository.findAll();
-        List<ClientDTO>clientDTOList=new ArrayList<>();
-        for (Client client: clientList){
-            ClientDTO dto=transferToDTO(client);
+    public List<ClientDTO> getAllClients() {
+        List<Client> clientList = clientRepository.findAll();
+        List<ClientDTO> clientDTOList = new ArrayList<>();
+        for (Client client : clientList) {
+            ClientDTO dto = transferToDTO(client);
             clientDTOList.add(dto);
         }
         return clientDTOList;
     }
-    public ClientDTO getClientById(Long id) throws Exception {
+
+    public ClientDTO getClientById(Long id) {
         Optional<Client> clientOptional = clientRepository.findById(id);
-        if (clientOptional.isPresent()){
+        if (clientOptional.isPresent()) {
             Client client1 = clientOptional.get();
-            ClientDTO dto=transferToDTO(client1);
-            if(client1.getGarageReceptionist()!=null){
+            ClientDTO dto = transferToDTO(client1);
+            if (client1.getGarageReceptionist() != null) {
                 dto.setGarageReceptionistDTO(garageReceptionistService.transferToDTO(client1.getGarageReceptionist()));
 
             }
@@ -59,22 +60,25 @@ public class ClientService {
         client.setId(dto.getId());
         return client;
     }
-    public ClientDTO transferToDTO(Client client){
-        ClientDTO dto=new ClientDTO();
+
+    public ClientDTO transferToDTO(Client client) {
+        ClientDTO dto = new ClientDTO();
         dto.setId(client.getId());
-        if (client.getGarageReceptionist()!=null){
+        if (client.getGarageReceptionist() != null) {
 
             dto.setGarageReceptionistDTO(garageReceptionistService.transferToDTO(client.getGarageReceptionist()));
 
         }
         return dto;
     }
+
     public ClientDTO addClient(ClientDTO dto) {
-        Client client=transferToClient(dto);
+        Client client = transferToClient(dto);
         clientRepository.save(client);
-        return  transferToDTO(client);
+        return transferToDTO(client);
     }
-    public ClientDTO updateClient(Long id, ClientDTO clientDTO) throws RecordNotFoundException {
+
+    public ClientDTO updateClient(Long id, ClientDTO clientDTO) {
 
         if (clientRepository.findById(id).isPresent()) {
 
@@ -93,18 +97,19 @@ public class ClientService {
             throw new RecordNotFoundException();
         }
     }
+
     public void deleteClient(@RequestBody Long id) {
 
         clientRepository.deleteById(id);
 
     }
 
-    public void assignGarageReseptionistToCliet(Long id, Long garageReseptionistId) throws RecordNotFoundException {
+    public void assignGarageReseptionistToCliet(Long id, Long garageReseptionistId) {
         var optionalClient = clientRepository.findById(id);
         var optionalGarageReseptionist = garageReseptionistRepository.findById(garageReseptionistId);
 
-        if(optionalClient.isPresent() && optionalGarageReseptionist.isPresent()) {
-            var client= optionalClient.get();
+        if (optionalClient.isPresent() && optionalGarageReseptionist.isPresent()) {
+            var client = optionalClient.get();
             var garageReseptionist = optionalGarageReseptionist.get();
 
             client.setGarageReceptionist(garageReseptionist);
@@ -113,11 +118,12 @@ public class ClientService {
             throw new RecordNotFoundException();
         }
     }
-    public void assignUserToClient(Long id,String username) throws RecordNotFoundException {
+
+    public void assignUserToClient(Long id, String username) {
         Optional<Client> client = clientRepository.findById(id);
         Optional<User> nameOfUser = Optional.ofNullable(userRepository.findByUsername(username));
 
-        if (nameOfUser.isPresent()){
+        if (nameOfUser.isPresent()) {
             Client client1 = client.get();
             User user = nameOfUser.get();
             client1.setUser(user);
@@ -126,9 +132,6 @@ public class ClientService {
         } else {
             throw new RecordNotFoundException();
         }
-
-
-
     }
 
 }

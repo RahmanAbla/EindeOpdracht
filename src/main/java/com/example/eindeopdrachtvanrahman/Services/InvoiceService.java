@@ -1,7 +1,7 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
+import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.models.Invoice;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.InvoiceDTO;
 import com.example.eindeopdrachtvanrahman.repository.InvoceRepository;
 import org.springframework.stereotype.Service;
@@ -27,14 +27,14 @@ public class InvoiceService {
         }
         return invoiceDTOList;
     }
-    public InvoiceDTO getInvoicesById(Long id) throws Exception {
+    public InvoiceDTO getInvoicesById(Long id) {
             Optional <Invoice>invoiceOptional=invoceRepository.findById(id);
         if (invoiceOptional.isPresent()){
 
             Invoice invoice1 = invoiceOptional.get();
             return transferToDTO(invoice1);
         } else {
-            throw new Exception("no invoice found");
+            throw new RecordNotFoundException("no invoice found");
         }
     }
     public Invoice transferToInvoce(InvoiceDTO dto){
@@ -82,7 +82,7 @@ public class InvoiceService {
         return transferToDTO(invoice);
     }
 
-    public InvoiceDTO updateInvoice(Long id, InvoiceDTO invoiceDTO) throws RecordNotFoundException {
+    public InvoiceDTO updateInvoice(Long id, InvoiceDTO invoiceDTO) {
 
         if (invoceRepository.findById(id).isPresent()){
 

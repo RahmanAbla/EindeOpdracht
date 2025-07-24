@@ -1,7 +1,7 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
+import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.models.Car;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.CarDTO;
 import com.example.eindeopdrachtvanrahman.dto.CarInputDto;
 import com.example.eindeopdrachtvanrahman.repository.CarRepository;
@@ -29,14 +29,14 @@ public class CarService {
      return carDTOList;
     }
 
-    public CarDTO getCarsById(Long id) throws Exception {
+    public CarDTO getCarsById(Long id) {
         Optional<Car>carOptional = carRepository.findById(id);
         if (carOptional.isPresent()){
 
             Car car1 = carOptional.get();
             return transferToDTO(car1);
         } else {
-            throw new Exception("no car found");
+            throw new RecordNotFoundException("no car found");
         }
     }
 
@@ -66,7 +66,7 @@ public CarDTO transferToDTO(Car car){
         return transferToDTO(car);
     }
 
-    public CarDTO updateCar(Long id, CarInputDto inputDto) throws RecordNotFoundException {
+    public CarDTO updateCar(Long id, CarInputDto inputDto) {
 
         if (carRepository.findById(id).isPresent()){
 
@@ -81,7 +81,7 @@ public CarDTO transferToDTO(Car car){
 
         } else {
 
-            throw new  RecordNotFoundException();
+            throw new RecordNotFoundException();
 
         }
 

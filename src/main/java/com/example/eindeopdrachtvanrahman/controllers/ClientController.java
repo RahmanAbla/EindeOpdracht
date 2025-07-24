@@ -3,7 +3,6 @@ package com.example.eindeopdrachtvanrahman.controllers;
 import com.example.eindeopdrachtvanrahman.Services.ClientService;
 
 import com.example.eindeopdrachtvanrahman.dto.ClientDTO;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,7 @@ public class ClientController {
         return ResponseEntity.ok(dtos);
     }
     @GetMapping("/clients/{id}")
-    public ResponseEntity<ClientDTO> getClientById(@PathVariable("id") Long id) throws Exception {
+    public ResponseEntity<ClientDTO> getClientById(@PathVariable("id") Long id) {
 
         ClientDTO clientDTO = clientService.getClientById(id);
 
@@ -43,20 +42,20 @@ public class ClientController {
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/clients/{id}")
-    public ResponseEntity<Object> updateClient(@PathVariable Long id, @RequestBody ClientDTO newClient) throws RecordNotFoundException {
+    public ResponseEntity<Object> updateClient(@PathVariable Long id, @RequestBody ClientDTO newClient) {
         ClientDTO dto= clientService.updateClient(id, newClient);
         return ResponseEntity.ok(dto);
     }
 
     //Dit is een andere manier om het te doen, met twee Pathvariables, maar het kan uiteraard ook anders.
     @PutMapping("/clients/{id}/{garagereceptionistsid}")
-    public ResponseEntity<Object> assignGarageReseptionistToCliet(@PathVariable("id") Long id, @PathVariable("garagereceptionistsid") Long garagereceptionistsid) throws RecordNotFoundException {
+    public ResponseEntity<Object> assignGarageReseptionistToCliet(@PathVariable("id") Long id, @PathVariable("garagereceptionistsid") Long garagereceptionistsid) {
         clientService.assignGarageReseptionistToCliet(id,garagereceptionistsid );
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/clients/users/{id}/{userName}")
-    public void assignUserToCliet(@PathVariable("id") Long id, @PathVariable("userName") String userName) throws RecordNotFoundException {
+    public void assignUserToCliet(@PathVariable("id") Long id, @PathVariable("userName") String userName) {
         clientService.assignUserToClient(id, userName);
     }
 }

@@ -2,7 +2,6 @@ package com.example.eindeopdrachtvanrahman.controllers;
 
 import com.example.eindeopdrachtvanrahman.Services.GarageReceptionistService;
 import com.example.eindeopdrachtvanrahman.dto.GarageReceptionistDTO;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +21,7 @@ public class GarageReceptionistController {
         return ResponseEntity.ok(dtos);
     }
     @GetMapping("/garagereceptionists/{id}")
-    public ResponseEntity<GarageReceptionistDTO>getGarageReceptionistById(@PathVariable("id") Long id) throws Exception {
+    public ResponseEntity<GarageReceptionistDTO>getGarageReceptionistById(@PathVariable("id") Long id) {
 
         GarageReceptionistDTO garageReceptionistDTO = garageReceptionistService.getGarageReceptionistById(id);
 
@@ -41,7 +40,7 @@ public class GarageReceptionistController {
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/garagereceptionists/{id}")
-    public ResponseEntity<Object> updateGarageReceptionist(@PathVariable Long id, @RequestBody GarageReceptionistDTO newGarageReceptionist) throws RecordNotFoundException {
+    public ResponseEntity<Object> updateGarageReceptionist(@PathVariable Long id, @RequestBody GarageReceptionistDTO newGarageReceptionist) {
     GarageReceptionistDTO dto=garageReceptionistService.updateGarageReceptionist(id,newGarageReceptionist);
         return ResponseEntity.ok(dto);
     }

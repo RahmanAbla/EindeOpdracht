@@ -2,7 +2,6 @@ package com.example.eindeopdrachtvanrahman.controllers;
 
 import com.example.eindeopdrachtvanrahman.Services.InvoiceService;
 import com.example.eindeopdrachtvanrahman.dto.InvoiceDTO;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,7 @@ public class InvoiceController {
     }
 
     @GetMapping("/invoices/{id}")
-    public ResponseEntity<InvoiceDTO> getInvoicesById(@PathVariable("id") Long id ) throws Exception {
+    public ResponseEntity<InvoiceDTO> getInvoicesById(@PathVariable("id") Long id ) {
         InvoiceDTO invoiceDTO = invoiceService.getInvoicesById(id);
         return ResponseEntity.ok(invoiceDTO);
     }
@@ -45,7 +44,7 @@ public class InvoiceController {
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/invoices/{id}")
-    public ResponseEntity<Object> updateInvoice(@PathVariable Long id, @Valid @RequestBody InvoiceDTO newInvoice) throws RecordNotFoundException {
+    public ResponseEntity<Object> updateInvoice(@PathVariable Long id, @Valid @RequestBody InvoiceDTO newInvoice) {
    InvoiceDTO dto=invoiceService.updateInvoice(id, newInvoice);
         return ResponseEntity.ok(dto);
     }

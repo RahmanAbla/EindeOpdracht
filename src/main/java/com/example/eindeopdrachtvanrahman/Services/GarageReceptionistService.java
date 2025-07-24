@@ -1,7 +1,7 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
+import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.models.GarageReceptionist;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.GarageReceptionistDTO;
 import com.example.eindeopdrachtvanrahman.repository.GarageReseptionistRepository;
 import org.springframework.stereotype.Service;
@@ -27,12 +27,14 @@ public class GarageReceptionistService {
         } return garageReceptionistDTOList;
 
     }
-    public GarageReceptionistDTO getGarageReceptionistById(Long id)throws Exception{
+    public GarageReceptionistDTO getGarageReceptionistById(Long id) {
         Optional<GarageReceptionist>garageReceptionistOptional=garageReseptionistRepository.findById(id);
         if (garageReceptionistOptional.isPresent()){
             GarageReceptionist garageReceptionist1=garageReceptionistOptional.get();
             return transferToDTO(garageReceptionist1);
-        }else{throw new Exception("no garage receptionist found");
+        }else{
+
+            throw new RecordNotFoundException("no garage receptionist found");
 
         }
     }
@@ -60,7 +62,7 @@ public class GarageReceptionistService {
         garageReseptionistRepository.save(garageReceptionist);
         return  transferToDTO(garageReceptionist);
     }
-    public GarageReceptionistDTO updateGarageReceptionist(Long id, GarageReceptionistDTO garageReceptionistDTO) throws RecordNotFoundException {
+    public GarageReceptionistDTO updateGarageReceptionist(Long id, GarageReceptionistDTO garageReceptionistDTO) {
 
         if (garageReseptionistRepository.findById(id).isPresent()) {
 

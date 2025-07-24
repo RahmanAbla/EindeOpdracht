@@ -27,18 +27,18 @@ public class SpringSecurityConfig {
         this.jwtRequestFilter = jwtRequestFilter;
     }
 
-   // authenticatie met customUserDetailsService en PasswordEncoder
+    // authenticatie met customUserDetailsService en PasswordEncoder
     @Bean
-    public AuthenticationManager authenticationManager( PasswordEncoder passwordEncoder) throws Exception {
+    public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder) throws Exception {
         var auth = new DaoAuthenticationProvider();
         auth.setPasswordEncoder(passwordEncoder);
         auth.setUserDetailsService(customUserDetailsService);
         return new ProviderManager(auth);
     }
 
-//Authorizatie met jwt
+    //Authorizatie met jwt
     @Bean
-    protected SecurityFilterChain filter (HttpSecurity http) throws Exception {
+    protected SecurityFilterChain filter(HttpSecurity http) throws Exception {
 
         http
                 .csrf(csrf -> csrf.disable())
@@ -48,41 +48,31 @@ public class SpringSecurityConfig {
                                 auth
                                         // Wanneer je deze uncomments, staat je hele security open. Je hebt dan alleen nog een jwt nodig.
 //                .requestMatchers("/**").permitAll()
-                                        .requestMatchers( "/cars").hasRole("MECHANIC")
-                                        .requestMatchers( "/cars/**").hasAnyRole("ADMIN","MECHANIC")
-                                        .requestMatchers("carmechanics").hasRole("MECHANIC")
-                                        .requestMatchers("/image").hasAnyRole("ADMIN","MECHANIC")
-                                        .requestMatchers("/image/**").hasAnyRole("ADMIN","MECHANIC")
-                                        .requestMatchers("carmechanics/**").hasRole("MECHANIC")
-                                        .requestMatchers("clients").hasRole("MECHANIC")
-                                        .requestMatchers("clients/**").hasRole("MECHANIC")
-                                        .requestMatchers("clients/users/**").hasRole("MECHANIC")
-                                        .requestMatchers("garagereceptionists").hasRole("MECHANIC")
-                                        .requestMatchers("garagereceptionists/**").hasAnyRole("ADMIN","MECHANIC")
-                                        .requestMatchers("inspections").hasRole("MECHANIC")
-                                        .requestMatchers("inspections/**").hasRole("MECHANIC")
-                                        .requestMatchers("repairs").hasRole("MECHANIC")
-                                        .requestMatchers("repairs/**").hasRole("MECHANIC")
-                                        .requestMatchers("invoices").hasRole("MECHANIC")
-                                        .requestMatchers("invoices/**").hasAnyRole("ADMIN","MECHANIC")
-                                        .requestMatchers("users").hasRole("MECHANIC")
-                                        .requestMatchers("users/**").hasRole("MECHANIC")
+                                        .requestMatchers("/cars").hasRole("MECHANIC")
+                                        .requestMatchers("/cars/**").hasAnyRole("ADMIN", "MECHANIC")
+                                        .requestMatchers("/carmechanics").hasRole("MECHANIC")
+                                        .requestMatchers("/carmechanics/**").hasRole("MECHANIC")
+                                        .requestMatchers("/image").hasAnyRole("ADMIN", "MECHANIC")
+                                        .requestMatchers("/image/**").hasAnyRole("ADMIN", "MECHANIC")
+                                        .requestMatchers("/clients").hasRole("MECHANIC")
+                                        .requestMatchers("/clients/**").hasRole("MECHANIC")
+                                        .requestMatchers("/clients/users/**").hasRole("MECHANIC")
+                                        .requestMatchers("/garagereceptionists").hasRole("MECHANIC")
+                                        .requestMatchers("/garagereceptionists/**").hasAnyRole("ADMIN", "MECHANIC")
+                                        .requestMatchers("/inspections").hasRole("MECHANIC")
+                                        .requestMatchers("/inspections/**").hasRole("MECHANIC")
+                                        .requestMatchers("/repairs").hasRole("MECHANIC")
+                                        .requestMatchers("/repairs/**").hasRole("MECHANIC")
+                                        .requestMatchers("/invoices").hasRole("MECHANIC")
+                                        .requestMatchers("/invoices/**").hasAnyRole("ADMIN", "MECHANIC")
+                                        .requestMatchers("/users").hasRole("MECHANIC")
+                                        .requestMatchers("/users/**").hasRole("MECHANIC")
                                         .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
-                                        .requestMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
-                                        .requestMatchers(HttpMethod.POST,"/users/**").hasRole("ADMIN")
+                                        .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
+                                        .requestMatchers(HttpMethod.POST, "/users/**").hasRole("ADMIN")
                                         .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
-                                        .requestMatchers(HttpMethod.POST,"/users/**").hasRole("ADMIN")
+                                        .requestMatchers(HttpMethod.POST, "/users/**").hasRole("ADMIN")
                                         .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
-//                                        .requestMatchers(HttpMethod.POST, "/cimodules").hasRole("ADMIN")
-//                                        .requestMatchers(HttpMethod.DELETE, "/cimodules/**").hasRole("ADMIN")
-//                                        .requestMatchers(HttpMethod.POST, "/remotecontrollers").hasRole("ADMIN")
-//                                        .requestMatchers(HttpMethod.DELETE, "/remotecontrollers/**").hasRole("ADMIN")
-//                                        .requestMatchers(HttpMethod.POST, "/televisions").hasRole("ADMIN")
-//                                        .requestMatchers(HttpMethod.DELETE, "/televisions/**").hasRole("ADMIN")
-//                                        .requestMatchers(HttpMethod.POST, "/wallbrackets").hasRole("ADMIN")
-//                                        .requestMatchers(HttpMethod.DELETE, "/wallbrackets/**").hasRole("ADMIN")
-                                        // Je mag meerdere paths tegelijk definieren
-//                                        .requestMatchers("/cimodules", "/remotecontrollers", "/televisions", "/wallbrackets").hasAnyRole("ADMIN", "USER")
                                         .requestMatchers("/authenticated").authenticated()
                                         .requestMatchers("/authenticate").permitAll()
                                         .anyRequest().denyAll()
@@ -91,16 +81,6 @@ public class SpringSecurityConfig {
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }

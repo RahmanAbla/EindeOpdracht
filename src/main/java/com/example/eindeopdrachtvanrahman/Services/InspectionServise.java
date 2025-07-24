@@ -1,7 +1,7 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
+import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.models.Inspection;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.InspectionDTO;
 import com.example.eindeopdrachtvanrahman.repository.InspectionRepository;
 import org.springframework.stereotype.Service;
@@ -27,14 +27,14 @@ public class InspectionServise {
         return inspectionDTOList;
     }
 
-    public InspectionDTO getInspectionById(Long id) throws Exception {
+    public InspectionDTO getInspectionById(Long id) {
         Optional<Inspection> inspectionOptional = inspectionRepository.findById(id);
         if (inspectionOptional.isPresent()) {
 
             Inspection inspection1 = inspectionOptional.get();
             return transferToDTO(inspection1);
         } else {
-            throw new Exception("no inspection found");
+            throw new RecordNotFoundException("no inspection found");
         }
     }
 
@@ -65,7 +65,7 @@ public class InspectionServise {
         return transferToDTO(inspection);
     }
 
-    public InspectionDTO updateInspection(Long id, InspectionDTO inspectionDTO) throws RecordNotFoundException {
+    public InspectionDTO updateInspection(Long id, InspectionDTO inspectionDTO) {
 
         if (inspectionRepository.findById(id).isPresent()) {
 
