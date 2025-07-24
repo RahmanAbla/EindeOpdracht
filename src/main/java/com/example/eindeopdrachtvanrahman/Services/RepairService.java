@@ -1,7 +1,7 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
+import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.models.Repair;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.RepairDTO;
 import com.example.eindeopdrachtvanrahman.repository.RepairRepository;
 import org.springframework.stereotype.Service;
@@ -30,14 +30,14 @@ public class RepairService {
     }
 
 
-    public RepairDTO getRepairById(Long id) throws Exception {
+    public RepairDTO getRepairById(Long id) {
         Optional<Repair> repairOptional = repairRepository.findById(id);
         if (repairOptional.isPresent()){
 
             Repair repair1 = repairOptional.get();
             return transferToDTO(repair1);
         } else {
-            throw new Exception("no repair found");
+            throw new RecordNotFoundException("no repair found");
         }
     }
 
@@ -65,7 +65,7 @@ public class RepairService {
         return transferToDTO(repair);
     }
 
-    public RepairDTO updateRepair(Long id, RepairDTO repairDTO) throws RecordNotFoundException {
+    public RepairDTO updateRepair(Long id, RepairDTO repairDTO) {
 
         if (repairRepository.findById(id).isPresent()) {
 

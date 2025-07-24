@@ -2,7 +2,6 @@ package com.example.eindeopdrachtvanrahman.controllers;
 
 import com.example.eindeopdrachtvanrahman.Services.CarMechanicService;
 import com.example.eindeopdrachtvanrahman.dto.CarMechanicDTO;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class CarMechanicController {
         return ResponseEntity.ok(dtos);
     }
     @GetMapping("/carmechanics/{id}")
-    public ResponseEntity<CarMechanicDTO>getCarMechanicById(@PathVariable("id") Long id) throws Exception {
+    public ResponseEntity<CarMechanicDTO>getCarMechanicById(@PathVariable("id") Long id) {
 
         CarMechanicDTO carMechanicDTO = carMechanicService.getCarMechanicById(id);
 
@@ -43,24 +42,24 @@ public class CarMechanicController {
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/carmechanics/{id}")
-    public ResponseEntity<Object> updateCarMechanic(@PathVariable Long id, @RequestBody CarMechanicDTO newCarMechanic) throws RecordNotFoundException {
+    public ResponseEntity<Object> updateCarMechanic(@PathVariable Long id, @RequestBody CarMechanicDTO newCarMechanic) {
         CarMechanicDTO dto=carMechanicService.updateCarMechanic(id, newCarMechanic);
         return ResponseEntity.ok(dto);
     }
     //Dit is een andere manier om het te doen, met twee Pathvariables, maar het kan uiteraard ook anders.
     @PutMapping("/carmechanics/{id}/{garagereceptionistsid}")
-    public ResponseEntity<Object>assignGarageReseptionistToCarMechanic(@PathVariable("id") Long id, @PathVariable("garagereceptionistsid") Long garagereceptionistsid) throws RecordNotFoundException {
+    public ResponseEntity<Object>assignGarageReseptionistToCarMechanic(@PathVariable("id") Long id, @PathVariable("garagereceptionistsid") Long garagereceptionistsid) {
         carMechanicService.assignGarageReseptionistToCarMechanic(id,garagereceptionistsid );
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/carmechanics/{id}/image/{nameOfImage}")
     @Transactional
-    public void assignImageToCarMechanic(@PathVariable("id") Long id, @PathVariable("nameOfImage") String nameOfImage) throws RecordNotFoundException {
+    public void assignImageToCarMechanic(@PathVariable("id") Long id, @PathVariable("nameOfImage") String nameOfImage) {
         carMechanicService.assignImageToCarMechanic(id, nameOfImage);
     }
 
     @PutMapping("/carmechanics/user/{id}/{userName}")
-    public void assignUserToCarMechanic(@PathVariable("id") Long id, @PathVariable("userName") String userName) throws RecordNotFoundException {
+    public void assignUserToCarMechanic(@PathVariable("id") Long id, @PathVariable("userName") String userName) {
         carMechanicService.assignUserToCarMechanic(id,userName);
     }
 }

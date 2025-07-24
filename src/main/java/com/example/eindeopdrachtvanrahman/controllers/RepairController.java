@@ -2,7 +2,6 @@ package com.example.eindeopdrachtvanrahman.controllers;
 
 
 import com.example.eindeopdrachtvanrahman.Services.RepairService;
-import com.example.eindeopdrachtvanrahman.dto.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.dto.RepairDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +23,7 @@ public class RepairController {
         return ResponseEntity.ok(dtos);
     }
     @GetMapping("/repairs/{id}")
-    public ResponseEntity<RepairDTO> getRepair(@PathVariable("id") Long id) throws Exception {
+    public ResponseEntity<RepairDTO> getRepair(@PathVariable("id") Long id) {
         RepairDTO repairDTO =repairService.getRepairById(id);
 
         return ResponseEntity.ok(repairDTO);
@@ -42,7 +41,7 @@ public class RepairController {
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/repairs/{id}")
-    public ResponseEntity<Object> updateRepair(@PathVariable Long id, @Valid @RequestBody RepairDTO newRepair) throws RecordNotFoundException {
+    public ResponseEntity<Object> updateRepair(@PathVariable Long id, @Valid @RequestBody RepairDTO newRepair) {
        RepairDTO dto=repairService.updateRepair(id,newRepair);
        return ResponseEntity.ok().body(dto);
     }
