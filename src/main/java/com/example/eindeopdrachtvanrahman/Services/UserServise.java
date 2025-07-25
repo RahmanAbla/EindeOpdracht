@@ -1,11 +1,11 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
+import com.example.eindeopdrachtvanrahman.exeptions.UsernameNotFoundException;
 import com.example.eindeopdrachtvanrahman.models.Authority;
 import com.example.eindeopdrachtvanrahman.models.User;
 import com.example.eindeopdrachtvanrahman.dto.UserDTO;
 import com.example.eindeopdrachtvanrahman.repository.UserRepository;
 import com.example.eindeopdrachtvanrahman.utils.RandomStringGenerator;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

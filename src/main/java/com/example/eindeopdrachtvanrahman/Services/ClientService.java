@@ -120,18 +120,17 @@ public class ClientService {
     }
 
     public void assignUserToClient(Long id, String username) {
-        Optional<Client> client = clientRepository.findById(id);
-        Optional<User> nameOfUser = Optional.ofNullable(userRepository.findByUsername(username));
-
-        if (nameOfUser.isPresent()) {
-            Client client1 = client.get();
-            User user = nameOfUser.get();
+        var OptionalClient = clientRepository.findById(id);
+        var OptionalUser = Optional.ofNullable(userRepository.findByUsername(username));
+        if (OptionalClient.isPresent() && OptionalUser.isPresent()) {
+            var client1 = OptionalClient.get();
+            User user = OptionalUser.get();
             client1.setUser(user);
             clientRepository.save(client1);
-
         } else {
             throw new RecordNotFoundException();
         }
-    }
 
+
+    }
 }
