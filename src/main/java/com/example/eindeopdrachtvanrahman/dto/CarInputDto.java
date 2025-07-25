@@ -11,7 +11,7 @@ public class CarInputDto {
     @NotNull(message = "model can not be emmpty")
     private String model;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int manufacturingyear;
     public String getBrand() {

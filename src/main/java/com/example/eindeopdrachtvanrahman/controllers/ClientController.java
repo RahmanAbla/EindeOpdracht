@@ -48,14 +48,17 @@ public class ClientController {
     }
 
     //Dit is een andere manier om het te doen, met twee Pathvariables, maar het kan uiteraard ook anders.
-    @PutMapping("/clients/{id}/{garagereceptionistsid}")
+//    @PutMapping("/clients/{id}/{garagereceptionistsid}")
+    @PutMapping("/clients/{id}/garagereceptionist/{garagereceptionistsid}")
     public ResponseEntity<Object> assignGarageReseptionistToCliet(@PathVariable("id") Long id, @PathVariable("garagereceptionistsid") Long garagereceptionistsid) {
         clientService.assignGarageReseptionistToCliet(id,garagereceptionistsid );
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/clients/users/{id}/{userName}")
-    public void assignUserToCliet(@PathVariable("id") Long id, @PathVariable("userName") String userName) {
+//    @PutMapping("/clients/users/{id}/{userName}")
+    @PutMapping("/clients/{id}/users/{userName}")
+    public ResponseEntity<Object> assignUserToCliet(@PathVariable("id") Long id, @PathVariable("userName") String userName) {
         clientService.assignUserToClient(id, userName);
+        return ResponseEntity.noContent().build();
     }
 }
