@@ -1,5 +1,6 @@
 package com.example.eindeopdrachtvanrahman.dto;
 
+import com.example.eindeopdrachtvanrahman.models.Client;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,6 +10,7 @@ public class CarDTO {
     private String model;
     private int manufacturingyear;
     private Long id;
+    private Client client;
 
     public CarDTO(String brand, String model, int manufacturingyear, Long id) {
         this.brand = brand;
@@ -50,5 +52,13 @@ public class CarDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

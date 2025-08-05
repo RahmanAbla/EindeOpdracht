@@ -1,19 +1,17 @@
-package com.example.eindeopdrachtvanrahman.dto;
+package com.example.eindeopdrachtvanrahman.inputDTO;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 
 public class CarInputDto {
-   @NotNull(message = "Brand can not be emmpty")
+    @NotNull(message = "Brand can not be emmpty")
     private String brand;
     @NotNull(message = "model can not be emmpty")
     private String model;
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int manufacturingyear;
+
     public String getBrand() {
         return brand;
     }

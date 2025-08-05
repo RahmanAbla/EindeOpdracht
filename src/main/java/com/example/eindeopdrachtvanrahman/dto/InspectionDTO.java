@@ -1,5 +1,6 @@
 package com.example.eindeopdrachtvanrahman.dto;
 
+import com.example.eindeopdrachtvanrahman.models.CarMechanic;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,6 +10,7 @@ public class InspectionDTO {
     private String report;
     private Double inspectionCost;
     private Long id;
+    private CarMechanic carMechanic;
 
     public boolean isStatus() {
         return status;
@@ -40,5 +42,13 @@ public class InspectionDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public CarMechanic getCarMechanic() {
+        return carMechanic;
+    }
+
+    public void setCarMechanic(CarMechanic carMechanic) {
+        this.carMechanic = carMechanic;
     }
 }

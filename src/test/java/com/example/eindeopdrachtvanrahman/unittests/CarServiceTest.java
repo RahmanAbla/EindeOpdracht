@@ -2,10 +2,12 @@ package com.example.eindeopdrachtvanrahman.unittests;
 
 import com.example.eindeopdrachtvanrahman.Services.CarService;
 import com.example.eindeopdrachtvanrahman.dto.CarDTO;
-import com.example.eindeopdrachtvanrahman.dto.CarInputDto;
+import com.example.eindeopdrachtvanrahman.inputDTO.CarInputDto;
 import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.models.Car;
+import com.example.eindeopdrachtvanrahman.models.Client;
 import com.example.eindeopdrachtvanrahman.repository.CarRepository;
+import com.example.eindeopdrachtvanrahman.repository.ClientRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,6 +27,8 @@ import static org.mockito.Mockito.verify;
 public class CarServiceTest {
     @Mock
     CarRepository carRepository;
+    @Mock
+    ClientRepository clientRepository;
     @InjectMocks
     CarService service;
 
@@ -110,4 +114,46 @@ public class CarServiceTest {
         inputDto.setManufacturingyear(2020);
         assertThrows(RecordNotFoundException.class, () -> service.updateCar(nonExistentCarId, inputDto));
     }
+    @Test
+    void shouldAssignClientToCar() {
+        // Arrange
+        Long carId = 1L;
+        Long clientId = 2L;
+
+        Client client = new Client(clientId);
+        Car car = new Car(carId);
+
+        Mockito.when(carRepository.findById(carId)).thenReturn(Optional.of(car));
+        Mockito.when(clientRepository.findById(clientId)).thenReturn(Optional.of(client));
+
+        // Act
+        service.assignClientToCar(carId, clientId);
+
+        // Assert
+        assertEquals(client, car.getClient()); // controleer of client gekoppeld is
+        verify(carRepository).save(car); // controleer of opgeslagen is
+    }
+    @Test
+    void shouldThrowRecordNotFoundWhenCarOrClientDoesNotExist() {
+        Long carId = 1L;
+        Long clientId = 2L;
+
+        Mockito.when(carRepository.findById(carId)).thenReturn(Optional.empty());
+        Mockito.when(clientRepository.findById(clientId)).thenReturn(Optional.of(new Client(clientId)));
+
+        assertThrows(RecordNotFoundException.class, () -> {
+            service.assignClientToCar(carId, clientId);
+        });
+
+        // Ook testen als client niet bestaat
+        Mockito.when(carRepository.findById(carId)).thenReturn(Optional.of(new Car(carId)));
+        Mockito.when(clientRepository.findById(clientId)).thenReturn(Optional.empty());
+
+        assertThrows(RecordNotFoundException.class, () -> {
+            service.assignClientToCar(carId, clientId);
+        });
+    }
+
+
+
 }

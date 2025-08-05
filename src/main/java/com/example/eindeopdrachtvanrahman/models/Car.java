@@ -3,9 +3,18 @@ package com.example.eindeopdrachtvanrahman.models;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Entity
 @Table(name = "cars")
 public class Car {
+  @OneToOne(mappedBy ="car")
+    Repair repair;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
+    private Client client;
+    @OneToMany(mappedBy ="car")
+    private List<Invoice> invoices ;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,6 +35,9 @@ public class Car {
 
     public Car() {
 
+    }
+
+    public Car(Long carId) {
     }
 
     public String getBrand() {
@@ -58,5 +70,29 @@ public class Car {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Repair getRepair() {
+        return repair;
+    }
+
+    public void setRepair(Repair repair) {
+        this.repair = repair;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
 }

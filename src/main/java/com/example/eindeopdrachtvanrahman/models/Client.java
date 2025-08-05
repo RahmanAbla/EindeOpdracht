@@ -2,6 +2,8 @@ package com.example.eindeopdrachtvanrahman.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name ="clients" )
 public class Client {
@@ -14,6 +16,11 @@ public class Client {
 
     @OneToOne
     private User user;
+    @OneToOne(mappedBy = "client")
+    private Invoice invoice;
+    @OneToMany(mappedBy ="client")
+    private List<Car> cars ;
+
     public Client() {
 
     }
@@ -52,5 +59,20 @@ public class Client {
         this.user = user;
     }
 
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
 }
 

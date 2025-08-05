@@ -15,6 +15,19 @@ public class Repair {
     public Repair() {
         this.id = id;
     }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "carMechanic_id")
+    private CarMechanic carMechanic;
+   @OneToOne
+   private Car car;
+
+    public Repair(String description, String treatment, boolean status, Long id, Car car) {
+        this.description = description;
+        this.treatment = treatment;
+        this.status = status;
+        this.id = id;
+       this.car = car;
+    }
 
     public String getDescription() {
         return description;
@@ -46,5 +59,22 @@ public class Repair {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public CarMechanic getCarMechanic() {
+        return carMechanic;
+    }
+
+    public void setCarMechanic(CarMechanic carMechanic) {
+        this.carMechanic = carMechanic;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+
     }
 }
