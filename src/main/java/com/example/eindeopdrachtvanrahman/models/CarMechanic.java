@@ -1,12 +1,22 @@
 package com.example.eindeopdrachtvanrahman.models;
 
+import com.example.eindeopdrachtvanrahman.dto.CarMechanicDTO;
 import jakarta.persistence.*;
+
+import java.util.List;
+
 @Entity
 @Table(name ="carmechanics" )
 public class CarMechanic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToMany(mappedBy ="carMechanic")
+    private List<Repair>repairs ;
+    @OneToMany(mappedBy ="carMechanic")
+    private List<Invoice>invoices ;
+    @OneToMany(mappedBy ="carMechanic")
+    private List<Inspection>inspections ;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "garageReceptionist_id")
@@ -61,6 +71,22 @@ public class CarMechanic {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Repair> getRepairs() {
+        return repairs;
+    }
+
+    public void setRepairs(List<Repair> repairs) {
+        this.repairs = repairs;
+    }
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
 }
 

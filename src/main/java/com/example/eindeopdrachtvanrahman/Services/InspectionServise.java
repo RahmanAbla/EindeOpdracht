@@ -1,8 +1,10 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
 import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
+import com.example.eindeopdrachtvanrahman.models.CarMechanic;
 import com.example.eindeopdrachtvanrahman.models.Inspection;
 import com.example.eindeopdrachtvanrahman.dto.InspectionDTO;
+import com.example.eindeopdrachtvanrahman.repository.CarMechanicRepository;
 import com.example.eindeopdrachtvanrahman.repository.InspectionRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,12 @@ import java.util.Optional;
 @Service
 public class InspectionServise {
     private final InspectionRepository inspectionRepository;
+    private final CarMechanicRepository carMechanicRepository;
 
-    public InspectionServise(InspectionRepository inspectionRepository) {
+
+    public InspectionServise(InspectionRepository inspectionRepository, CarMechanicRepository carMechanicRepository) {
         this.inspectionRepository = inspectionRepository;
+        this.carMechanicRepository = carMechanicRepository;
     }
 
     public List<InspectionDTO> getAllInspections() {
@@ -89,6 +94,20 @@ public class InspectionServise {
 
         inspectionRepository.deleteById(id);
 
+    }
+    public void assignCarMechanicToInspection(Long id, Long carMechanicId) {
+        var optionalInspection = inspectionRepository.findById(id);
+        var optionalCarMechanic = carMechanicRepository.findById(carMechanicId);
+
+        if (optionalInspection.isPresent() &&optionalCarMechanic.isPresent()) {
+            var inspection = optionalInspection.get();
+            var carMechanic = optionalCarMechanic.get();
+
+            inspection.setCarMechanic(carMechanic);
+            inspectionRepository.save(inspection);
+        } else {
+            throw new RecordNotFoundException();
+        }
     }
 
 

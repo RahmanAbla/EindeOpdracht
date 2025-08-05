@@ -2,7 +2,7 @@ package com.example.eindeopdrachtvanrahman.controllers;
 
 import com.example.eindeopdrachtvanrahman.Services.CarService;
 import com.example.eindeopdrachtvanrahman.dto.CarDTO;
-import com.example.eindeopdrachtvanrahman.dto.CarInputDto;
+import com.example.eindeopdrachtvanrahman.inputDTO.CarInputDto;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +42,12 @@ public class CarController {
     public ResponseEntity<Object> updateCar(@PathVariable Long id, @Valid @RequestBody CarInputDto newCar){
         CarDTO dto=carService.updateCar(id ,newCar);
         return ResponseEntity.ok().body(dto);
+    }
+    @PutMapping("/cars/{id}/client/{clientid}")
+    public ResponseEntity<Object>assignClientToCar(@PathVariable("id") Long id, @PathVariable("clientid") Long clientid) {
+        carService.assignClientToCar(id, clientid);
+        return ResponseEntity.noContent().build();
+
     }
 
 }

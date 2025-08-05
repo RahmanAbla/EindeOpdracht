@@ -10,17 +10,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class InspectionController { private final InspectionServise inspectionServise;
+public class InspectionController {
+    private final InspectionServise inspectionServise;
+
     public InspectionController(InspectionServise inspectionServise) {
         this.inspectionServise = inspectionServise;
     }
+
     @GetMapping("/inspections")
-    public ResponseEntity<List<InspectionDTO>>getAllInspections() {
+    public ResponseEntity<List<InspectionDTO>> getAllInspections() {
 
         List<InspectionDTO> dtos = inspectionServise.getAllInspections();
 
         return ResponseEntity.ok(dtos);
     }
+
     @GetMapping("/inspections/{id}")
     public ResponseEntity<InspectionDTO> getInspectionById(@PathVariable("id") Long id) {
 
@@ -28,11 +32,13 @@ public class InspectionController { private final InspectionServise inspectionSe
 
         return ResponseEntity.ok(inspectionDTO);
     }
+
     @PostMapping("/inspections")
     public ResponseEntity<Object> addInspection(@RequestBody InspectionDTO dto) {
-        InspectionDTO inspectionDTO =inspectionServise.addInspection(dto);
+        InspectionDTO inspectionDTO = inspectionServise.addInspection(dto);
         return ResponseEntity.created(null).body(inspectionDTO);
     }
+
     @DeleteMapping("/inspections/{id}")
     public ResponseEntity<Object> deleteInspection(@PathVariable Long id) {
 
@@ -40,9 +46,17 @@ public class InspectionController { private final InspectionServise inspectionSe
 
         return ResponseEntity.noContent().build();
     }
+
     @PutMapping("/inspections/{id}")
-    public ResponseEntity<Object> updateInspection(@PathVariable Long id,@Valid @RequestBody InspectionDTO newInspection) {
-      InspectionDTO dto=inspectionServise.updateInspection(id,newInspection);
+    public ResponseEntity<Object> updateInspection(@PathVariable Long id, @Valid @RequestBody InspectionDTO newInspection) {
+        InspectionDTO dto = inspectionServise.updateInspection(id, newInspection);
         return ResponseEntity.ok().body(dto);
+    }
+
+    @PutMapping("/inspections/{id}/carmechanic/{carmechanicsid}")
+    public ResponseEntity<Object> assignCarMechanicToInspection(@PathVariable("id") Long id, @PathVariable("carmechanicsid") Long carmechanicsid) {
+        inspectionServise.assignCarMechanicToInspection(id, carmechanicsid);
+        return ResponseEntity.noContent().build();
+
     }
 }

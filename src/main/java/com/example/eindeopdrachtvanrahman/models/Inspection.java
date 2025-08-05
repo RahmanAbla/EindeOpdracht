@@ -11,6 +11,9 @@ public class Inspection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "carMechanic_id")
+    private CarMechanic carMechanic;
 
     public Inspection(boolean status, String report, Double inspectionCost, Long id) {
         this.status = status;
@@ -23,12 +26,12 @@ public class Inspection {
 
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public Inspection(boolean status, String report, Double inspectionCost, Long id, CarMechanic carMechanic) {
+        this.status = status;
+        this.report = report;
+        this.inspectionCost = inspectionCost;
         this.id = id;
+        this.carMechanic = carMechanic;
     }
 
     public boolean isStatus() {
@@ -55,4 +58,19 @@ public class Inspection {
         this.inspectionCost = inspectionCost;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public CarMechanic getCarMechanic() {
+        return carMechanic;
+    }
+
+    public void setCarMechanic(CarMechanic carMechanic) {
+        this.carMechanic = carMechanic;
+    }
 }

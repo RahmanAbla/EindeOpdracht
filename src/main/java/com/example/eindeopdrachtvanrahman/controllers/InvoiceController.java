@@ -31,9 +31,9 @@ public class InvoiceController {
         InvoiceDTO invoiceDTO = invoiceService.getInvoicesById(id);
         return ResponseEntity.ok(invoiceDTO);
     }
-    @PostMapping("/invoices")
-    public ResponseEntity<InvoiceDTO> addInvoice(@RequestBody InvoiceDTO dto) {
-        InvoiceDTO invoiceDTO = invoiceService.addInvoice(dto);
+    @PostMapping("/invoices/{repairCost}/{partCost}/{inspectionCost}")
+    public ResponseEntity<InvoiceDTO> addInvoice(@RequestBody InvoiceDTO dto,@PathVariable("repairCost") Double repairCost,@PathVariable("partCost") Double partCost,@PathVariable("inspectionCost") Double inspectionCost) {
+        InvoiceDTO invoiceDTO = invoiceService.addInvoice(dto, repairCost,partCost,inspectionCost);
         return ResponseEntity.created(null).body(invoiceDTO);
     }
     @DeleteMapping("/invoices/{id}")
@@ -48,5 +48,19 @@ public class InvoiceController {
    InvoiceDTO dto=invoiceService.updateInvoice(id, newInvoice);
         return ResponseEntity.ok(dto);
     }
-
+    @PutMapping("/invoices/{id}/carmechanic/{carmechanicsid}")
+    public ResponseEntity<Object>assignCarMechanicToInvoice(@PathVariable("id") Long id, @PathVariable("carmechanicsid") Long carmechanicsid) {
+        invoiceService.assignCarMechanicToInvoice(id,carmechanicsid);
+        return ResponseEntity.noContent().build();
+    }
+    @PutMapping("/invoices/{id}/client/{clientsid}")
+    public ResponseEntity<Object>assignClientToInvoice(@PathVariable("id") Long id, @PathVariable("clientsid") Long clientsid) {
+        invoiceService.assignClientToInvoice(id,clientsid);
+        return ResponseEntity.noContent().build();
+    }
+    @PutMapping("/invoices/{id}/car/{carsid}")
+    public ResponseEntity<Object>assignCarToInvoice(@PathVariable("id") Long id, @PathVariable("carsid") Long carsid) {
+        invoiceService.assignCarToInvoice(id,carsid);
+        return ResponseEntity.noContent().build();
+    }
 }

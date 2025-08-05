@@ -62,6 +62,7 @@ public class SpringSecurityConfig {
                                         .requestMatchers("/carmechanics/**").hasRole("MECHANIC")
                                         .requestMatchers("/image").hasAnyRole("MECHANIC")
                                         .requestMatchers("/image/**").hasAnyRole("MECHANIC")
+                                        .requestMatchers("/image/Download/**").hasAnyRole("MECHANIC")
                                         .requestMatchers("/clients").hasRole("MECHANIC")
                                         .requestMatchers("/clients/**").hasRole("MECHANIC")
                                         .requestMatchers("/clients/users/**").hasRole("MECHANIC")

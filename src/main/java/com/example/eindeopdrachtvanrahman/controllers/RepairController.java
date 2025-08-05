@@ -45,4 +45,15 @@ public class RepairController {
        RepairDTO dto=repairService.updateRepair(id,newRepair);
        return ResponseEntity.ok().body(dto);
     }
+    @PutMapping("/repairs/{id}/car/{carid}")
+    public ResponseEntity<Object>assignCarToRepair(@PathVariable("id") Long id, @PathVariable("carid") Long carid) {
+        repairService.assignCarToRepair(id,carid );
+        return ResponseEntity.noContent().build();
+    }
+    //Dit is een andere manier om het te doen, met twee Pathvariables, maar het kan uiteraard ook anders.
+    @PutMapping("/repairs/{id}/carmechanic/{carmechanicsid}")
+    public ResponseEntity<Object>assignCarMechanicToRepair(@PathVariable("id") Long id, @PathVariable("carmechanicsid") Long carmechanicsid) {
+        repairService.assignCarMechanicToRepair(id,carmechanicsid);
+        return ResponseEntity.noContent().build();
+    }
 }
