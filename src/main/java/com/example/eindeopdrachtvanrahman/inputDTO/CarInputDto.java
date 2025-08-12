@@ -1,5 +1,7 @@
 package com.example.eindeopdrachtvanrahman.inputDTO;
 
+import com.example.eindeopdrachtvanrahman.models.Client;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 
@@ -11,6 +13,9 @@ public class CarInputDto {
     @Id
     private Long id;
     private int manufacturingyear;
+
+    @JsonIncludeProperties("id")
+    private Client client;
 
     public String getBrand() {
         return brand;
@@ -42,5 +47,13 @@ public class CarInputDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

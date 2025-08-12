@@ -1,15 +1,13 @@
 package com.example.eindeopdrachtvanrahman.unittests;
 
 import com.example.eindeopdrachtvanrahman.Services.ClientService;
-import com.example.eindeopdrachtvanrahman.Services.GarageReceptionistService;
 import com.example.eindeopdrachtvanrahman.dto.ClientDTO;
-import com.example.eindeopdrachtvanrahman.dto.GarageReceptionistDTO;
 import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
+import com.example.eindeopdrachtvanrahman.models.CarMechanic;
 import com.example.eindeopdrachtvanrahman.models.Client;
-import com.example.eindeopdrachtvanrahman.models.GarageReceptionist;
 import com.example.eindeopdrachtvanrahman.models.User;
+import com.example.eindeopdrachtvanrahman.repository.CarMechanicRepository;
 import com.example.eindeopdrachtvanrahman.repository.ClientRepository;
-import com.example.eindeopdrachtvanrahman.repository.GarageReseptionistRepository;
 import com.example.eindeopdrachtvanrahman.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,8 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,28 +31,9 @@ public class ClientServiceTest<T> {
 
 
     @Mock
-    GarageReseptionistRepository garageReseptionistRepository;
+    CarMechanicRepository carMechanicRepository;
     @InjectMocks
     ClientService clientService;
-
-    @Mock
-    GarageReceptionistService garageReceptionistService;
-
-    @Test
-    void shouldRetrieveCorrectClientById() {
-        GarageReceptionist garageReceptionist = new GarageReceptionist("Jon", 45612341, "jon456@gmail.com", 4L);
-
-        Client client1 = new Client();
-        client1.setId(30l);
-        client1.setGarageReceptionist(garageReceptionist);
-        GarageReceptionistDTO receptionistDTO = new GarageReceptionistDTO();
-        // eventueel de eigenschappen instellen op receptionistDTO
-        Mockito.when(garageReceptionistService.transferToDTO(Mockito.any(GarageReceptionist.class)))
-                .thenReturn(receptionistDTO);
-        Mockito.when(clientRepository.findById(30L)).thenReturn(Optional.of(client1));
-        ClientDTO clientDTO = clientService.getClientById(30L);
-        assertEquals(30L, clientDTO.getId());
-    }
 
     @Test
     void shouldNotRetrieveCorrectClientById() throws Exception {
@@ -113,22 +91,23 @@ public class ClientServiceTest<T> {
     }
 
     @Test
-    void assignGarageReseptionistToCliet() throws RecordNotFoundException {
+    void assignCarMechanicToCliet() throws RecordNotFoundException {
         Client client = new Client(30L);
-        GarageReceptionist garageReceptionist = new GarageReceptionist("Tam", 1456961451, "Tam@123gmail.com", 3L);
+        CarMechanic carMechanic = new CarMechanic(3L, null, null);
 
         Mockito.when(clientRepository.findById(30L)).thenReturn(Optional.of(client));
-        Mockito.when(garageReseptionistRepository.findById(3L)).thenReturn(Optional.of(garageReceptionist));
-        clientService.assignGarageReseptionistToCliet(30L, 3L);
-        assertEquals(3L, client.getGarageReceptionist().getId());
+        Mockito.when(carMechanicRepository.findById(3L)).thenReturn(Optional.of(carMechanic));
+        clientService.assignCarMechanicToCliet(30L, 3L);
+        assertEquals(3L, client.getCarMechanic().getId());
     }
 
     @Test
-    void assignGarageReseptionistNotToCliet() {
+    void assignCarMechanicNotToCliet() {
         assertThrows(RecordNotFoundException.class,
-                () -> clientService.assignGarageReseptionistToCliet(10L, 20L));
+                () -> clientService.assignCarMechanicToCliet(10L, 20L));
 
     }
+
     @Test
     void shouldAssignUserToClient() {
         // Arrange
@@ -150,6 +129,7 @@ public class ClientServiceTest<T> {
         assertEquals(user, client.getUser()); // controleer of user gekoppeld is
         verify(clientRepository).save(client); // controleer of opgeslagen is
     }
+
     @Test
     void shouldThrowRecordNotFoundWhenUserDoesNotExist() {
         Long clientId = 1L;
@@ -165,4 +145,40 @@ public class ClientServiceTest<T> {
         });
 
     }
+
+    @Test
+    void shouldSetCarMechanicInDTOWhenClientHasCarMechanic() {
+        // Arrange
+        Client client = new Client(5L);
+
+        CarMechanic carMechanic = new CarMechanic(3L, null, null);
+        client.setCarMechanic(carMechanic);
+
+        // Act
+        ClientDTO dto = clientService.transferToDTO(client);
+
+        // Assert
+        assertNotNull(dto.getCarMechanic());
+        assertEquals(3L, dto.getCarMechanic().getId());
+    }
+
+    @Test
+    void shouldReturnClientDTOWhenClientExists() throws RecordNotFoundException {
+        // Arrange
+        Client client = new Client(10L);
+        CarMechanic carMechanic = new CarMechanic(3L, null, null);
+        client.setCarMechanic(carMechanic);
+
+        Mockito.when(clientRepository.findById(10L)).thenReturn(Optional.of(client));
+
+        // Act
+        ClientDTO dto = clientService.getClientById(10L);
+
+        // Assert
+        assertNotNull(dto);
+        assertEquals(10L, dto.getId());
+        assertEquals(3L, dto.getCarMechanic().getId());
+    }
+
+
 }

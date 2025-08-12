@@ -22,15 +22,16 @@ public class Invoice {
     @OneToOne
     @JoinColumn(name = "client_id")
     private Client client;
-        public Invoice(){
-
-        }
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     private Car car;
 
+    public Invoice() {
 
-    public Invoice(String description, Double repairCost, Double partCost, Double inspectionCost, double totalCost, Long id, CarMechanic carMechanic,Car car) {
+    }
+
+
+    public Invoice(String description, Double repairCost, Double partCost, Double inspectionCost, double totalCost, Long id, CarMechanic carMechanic, Car car) {
         this.description = description;
         this.repairCost = repairCost;
         this.partCost = partCost;
@@ -38,7 +39,7 @@ public class Invoice {
         this.totalCost = totalCost;
         this.id = id;
         this.carMechanic = carMechanic;
-        this.car=car;
+        this.car = car;
     }
 
     public String getDescription() {
@@ -108,9 +109,10 @@ public class Invoice {
     public LocalDate getDate() {
         return date;
     }
+
     @PrePersist
     public void setDate() {
-            this.date = LocalDate.now();
+        this.date = LocalDate.now();
 
     }
 

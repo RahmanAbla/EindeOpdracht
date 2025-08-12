@@ -1,6 +1,7 @@
 package com.example.eindeopdrachtvanrahman.dto;
 
 import com.example.eindeopdrachtvanrahman.models.CarMechanic;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -10,6 +11,7 @@ public class InspectionDTO {
     private String report;
     private Double inspectionCost;
     private Long id;
+    @JsonIncludeProperties("id")
     private CarMechanic carMechanic;
 
     public boolean isStatus() {

@@ -50,6 +50,7 @@ public class InspectionServise {
         inspection.setInspectionCost(dto.getInspectionCost());
         inspection.setReport(dto.getReport());
         inspection.setStatus(dto.isStatus());
+        inspection.setCarMechanic(dto.getCarMechanic());
         return inspection;
     }
 
@@ -59,6 +60,9 @@ public class InspectionServise {
         dto.setInspectionCost(inspection.getInspectionCost());
         dto.setReport(inspection.getReport());
         dto.setStatus(inspection.isStatus());
+        if (inspection.getCarMechanic()!=null){
+            dto.setCarMechanic(inspection.getCarMechanic());
+        }
         return dto;
     }
 

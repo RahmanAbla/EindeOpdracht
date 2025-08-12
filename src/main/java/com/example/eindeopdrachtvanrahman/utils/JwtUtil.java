@@ -8,8 +8,6 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
-import javax.xml.crypto.dsig.Transform;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;

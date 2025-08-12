@@ -1,20 +1,19 @@
 package com.example.eindeopdrachtvanrahman.models;
 
 import jakarta.persistence.*;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Entity
 @Table(name = "cars")
 public class Car {
-  @OneToOne(mappedBy ="car")
+    @OneToOne(mappedBy = "car")
     Repair repair;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
-    @OneToMany(mappedBy ="car")
-    private List<Invoice> invoices ;
+    @OneToMany(mappedBy = "car")
+    private List<Invoice> invoices;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

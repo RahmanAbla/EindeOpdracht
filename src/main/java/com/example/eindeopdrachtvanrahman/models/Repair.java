@@ -5,28 +5,27 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "repairs")
 public class Repair {
-   private String description;
-   private String treatment;
-   private boolean status;
+    private String description;
+    private String treatment;
+    private boolean status;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    public Repair() {
-        this.id = id;
-    }
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "carMechanic_id")
     private CarMechanic carMechanic;
-   @OneToOne
-   private Car car;
+    @OneToOne
+    private Car car;
+    public Repair() {
+        this.id = id;
+    }
 
     public Repair(String description, String treatment, boolean status, Long id, Car car) {
         this.description = description;
         this.treatment = treatment;
         this.status = status;
         this.id = id;
-       this.car = car;
+        this.car = car;
     }
 
     public String getDescription() {
@@ -65,16 +64,16 @@ public class Repair {
         return car;
     }
 
+    public void setCar(Car car) {
+        this.car = car;
+
+    }
+
     public CarMechanic getCarMechanic() {
         return carMechanic;
     }
 
     public void setCarMechanic(CarMechanic carMechanic) {
         this.carMechanic = carMechanic;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-
     }
 }

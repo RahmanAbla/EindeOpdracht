@@ -1,15 +1,14 @@
 package com.example.eindeopdrachtvanrahman.dto;
 
 import com.example.eindeopdrachtvanrahman.models.Client;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 public class CarDTO {
     private String brand;
     private String model;
     private int manufacturingyear;
     private Long id;
+    @JsonIncludeProperties("id")
     private Client client;
 
     public CarDTO(String brand, String model, int manufacturingyear, Long id) {

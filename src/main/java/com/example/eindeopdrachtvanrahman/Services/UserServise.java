@@ -1,9 +1,9 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
+import com.example.eindeopdrachtvanrahman.dto.UserDTO;
 import com.example.eindeopdrachtvanrahman.exeptions.UsernameNotFoundException;
 import com.example.eindeopdrachtvanrahman.models.Authority;
 import com.example.eindeopdrachtvanrahman.models.User;
-import com.example.eindeopdrachtvanrahman.dto.UserDTO;
 import com.example.eindeopdrachtvanrahman.repository.UserRepository;
 import com.example.eindeopdrachtvanrahman.utils.RandomStringGenerator;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +22,17 @@ public class UserServise {
     public <UserDto> UserServise(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public static UserDTO fromUser(User user) {
+        var dto = new UserDTO();
+        dto.username = user.getUsername();
+        dto.password = user.getPassword();
+        dto.enabled = user.isEnabled();
+        dto.apikey = user.getApikey();
+        dto.email = user.getEmail();
+        dto.authorities = user.getAuthorities();
+        return dto;
     }
 
     public List<UserDTO> getUsers() {
@@ -88,17 +99,6 @@ public class UserServise {
                 a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
         user.removeAuthority(authorityToRemove);
         userRepository.save(user);
-    }
-
-    public static UserDTO fromUser(User user) {
-        var dto = new UserDTO();
-        dto.username = user.getUsername();
-        dto.password = user.getPassword();
-        dto.enabled = user.isEnabled();
-        dto.apikey = user.getApikey();
-        dto.email = user.getEmail();
-        dto.authorities = user.getAuthorities();
-        return dto;
     }
 
     public User toUser(UserDTO userDTO) {
