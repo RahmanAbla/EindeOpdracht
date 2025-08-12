@@ -5,29 +5,29 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name ="clients" )
+@Table(name = "clients")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "garageReceptionist_id")
-    private GarageReceptionist garageReceptionist;
+    @JoinColumn(name = "carMechanic_id")
+    private CarMechanic carMechanic;
 
     @OneToOne
     private User user;
     @OneToOne(mappedBy = "client")
     private Invoice invoice;
-    @OneToMany(mappedBy ="client")
-    private List<Car> cars ;
+    @OneToMany(mappedBy = "client")
+    private List<Car> cars;
 
     public Client() {
 
     }
 
-    public Client(Long id, GarageReceptionist garageReceptionist, User user) {
+    public Client(Long id, User user, CarMechanic carMechanic) {
         this.id = id;
-        this.garageReceptionist = garageReceptionist;
+        this.carMechanic = carMechanic;
         this.user = user;
     }
 
@@ -41,14 +41,6 @@ public class Client {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public GarageReceptionist getGarageReceptionist() {
-        return garageReceptionist;
-    }
-
-    public void setGarageReceptionist(GarageReceptionist garageReceptionist) {
-        this.garageReceptionist = garageReceptionist;
     }
 
     public User getUser() {
@@ -73,6 +65,14 @@ public class Client {
 
     public void setCars(List<Car> cars) {
         this.cars = cars;
+    }
+
+    public CarMechanic getCarMechanic() {
+        return carMechanic;
+    }
+
+    public void setCarMechanic(CarMechanic carMechanic) {
+        this.carMechanic = carMechanic;
     }
 }
 

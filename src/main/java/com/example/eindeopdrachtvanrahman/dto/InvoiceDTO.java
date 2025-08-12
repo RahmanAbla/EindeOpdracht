@@ -2,14 +2,11 @@ package com.example.eindeopdrachtvanrahman.dto;
 
 import com.example.eindeopdrachtvanrahman.models.Car;
 import com.example.eindeopdrachtvanrahman.models.CarMechanic;
+import com.example.eindeopdrachtvanrahman.models.Client;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 
 public class InvoiceDTO {
     private String description;
@@ -18,8 +15,11 @@ public class InvoiceDTO {
     private Double inspectionCost;
     private double totalCost;
     private Long id;
+    @JsonIncludeProperties("id")
     private CarMechanic carMechanic;
-    private long clientId;
+    @JsonIncludeProperties("id")
+    private Client clientId;
+    @JsonIncludeProperties("id")
     private Car car;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -81,11 +81,11 @@ public class InvoiceDTO {
         this.carMechanic = carMechanic;
     }
 
-    public long getClientId() {
+    public Client getClientId() {
         return clientId;
     }
 
-    public void setClientId(long clientId) {
+    public void setClientId(Client clientId) {
         this.clientId = clientId;
     }
 

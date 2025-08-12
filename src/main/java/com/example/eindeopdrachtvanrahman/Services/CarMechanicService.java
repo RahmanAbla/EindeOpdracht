@@ -1,12 +1,11 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
+import com.example.eindeopdrachtvanrahman.dto.CarMechanicDTO;
 import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.models.CarMechanic;
-import com.example.eindeopdrachtvanrahman.models.User;
-import com.example.eindeopdrachtvanrahman.dto.CarMechanicDTO;
 import com.example.eindeopdrachtvanrahman.models.ImageData;
+import com.example.eindeopdrachtvanrahman.models.User;
 import com.example.eindeopdrachtvanrahman.repository.CarMechanicRepository;
-import com.example.eindeopdrachtvanrahman.repository.GarageReseptionistRepository;
 import com.example.eindeopdrachtvanrahman.repository.ImageRepository;
 import com.example.eindeopdrachtvanrahman.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -19,16 +18,12 @@ import java.util.Optional;
 @Service
 public class CarMechanicService {
     private final CarMechanicRepository carMechanicRepository;
-    private final GarageReseptionistRepository garageReseptionistRepository;
-    private final GarageReceptionistService garageReceptionistService;
     private final ImageRepository imageRepository;
-    private CarMechanic carMechanic;
     private final UserRepository userRepository;
+    private CarMechanic carMechanic;
 
-    public CarMechanicService(CarMechanicRepository carMechanicRepository, GarageReseptionistRepository garageReseptionistRepository, GarageReceptionistService garageReceptionistService, ImageRepository imageRepository, UserRepository userRepository) {
+    public CarMechanicService(CarMechanicRepository carMechanicRepository, ImageRepository imageRepository, UserRepository userRepository) {
         this.carMechanicRepository = carMechanicRepository;
-        this.garageReseptionistRepository = garageReseptionistRepository;
-        this.garageReceptionistService = garageReceptionistService;
         this.imageRepository = imageRepository;
         this.userRepository = userRepository;
     }
@@ -48,15 +43,12 @@ public class CarMechanicService {
         Optional<CarMechanic> carMechanicOptional = carMechanicRepository.findById(id);
         if (carMechanicOptional.isPresent()) {
             CarMechanic carMechanic1 = carMechanicOptional.get();
-            CarMechanicDTO dto = transferToDTO(carMechanic1);
-            if (carMechanic1.getGarageReceptionist() != null) {
-                dto.setGarageReceptionistDTO(garageReceptionistService.transferToDTO(carMechanic1.getGarageReceptionist()));
-            }
             return transferToDTO(carMechanic1);
         } else {
             throw new RecordNotFoundException("no carMechanic found");
         }
     }
+
 
     public CarMechanic transferToCarMechanic(CarMechanicDTO dto) {
         var carMechanic = new CarMechanic();
@@ -102,21 +94,6 @@ public class CarMechanicService {
 
         carMechanicRepository.deleteById(id);
 
-    }
-
-    public void assignGarageReseptionistToCarMechanic(Long id, Long garageReseptionistId) {
-        var optionalCarMechanic = carMechanicRepository.findById(id);
-        var optionalGarageReseptionist = garageReseptionistRepository.findById(garageReseptionistId);
-
-        if (optionalCarMechanic.isPresent() && optionalGarageReseptionist.isPresent()) {
-            var carMechanic = optionalCarMechanic.get();
-            var garageReseptionist = optionalGarageReseptionist.get();
-
-            carMechanic.setGarageReceptionist(garageReseptionist);
-            carMechanicRepository.save(carMechanic);
-        } else {
-            throw new RecordNotFoundException();
-        }
     }
 
     public void assignImageToCarMechanic(Long id, String nameOfImage) {

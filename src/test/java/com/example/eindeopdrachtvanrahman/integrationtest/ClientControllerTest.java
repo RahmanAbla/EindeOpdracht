@@ -26,6 +26,8 @@ public class ClientControllerTest {
     private MockMvc mockMvc;
     private ClientDTO mockClientDTO;
     private ObjectMapper objectMapper;
+    @Autowired
+    private ClientRepository clientRepository;
 
     @BeforeEach
     void setUp() {
@@ -45,9 +47,6 @@ public class ClientControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1));
     }
-
-    @Autowired
-    private ClientRepository clientRepository;
 
     @Test
     void testGetAllClients() throws Exception {

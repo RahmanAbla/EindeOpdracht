@@ -1,26 +1,24 @@
 package com.example.eindeopdrachtvanrahman.models;
 
-import com.example.eindeopdrachtvanrahman.dto.CarMechanicDTO;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name ="carmechanics" )
+@Table(name = "carmechanics")
 public class CarMechanic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy ="carMechanic")
-    private List<Repair>repairs ;
-    @OneToMany(mappedBy ="carMechanic")
-    private List<Invoice>invoices ;
-    @OneToMany(mappedBy ="carMechanic")
-    private List<Inspection>inspections ;
+    @OneToMany(mappedBy = "carMechanic")
+    private List<Repair> repairs;
+    @OneToMany(mappedBy = "carMechanic")
+    private List<Invoice> invoices;
+    @OneToMany(mappedBy = "carMechanic")
+    private List<Inspection> inspections;
+    @OneToMany(mappedBy = "carMechanic")
+    private List<Client> clients;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "garageReceptionist_id")
-    private GarageReceptionist garageReceptionist;
 
     @OneToOne()
     @JoinColumn(name = "imageData")
@@ -29,9 +27,8 @@ public class CarMechanic {
     @OneToOne
     private User user;
 
-    public CarMechanic(Long id, GarageReceptionist garageReceptionist, ImageData imageData, User user) {
+    public CarMechanic(Long id, ImageData imageData, User user) {
         this.id = id;
-        this.garageReceptionist = garageReceptionist;
         this.imageData = imageData;
         this.user = user;
     }
@@ -47,14 +44,6 @@ public class CarMechanic {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public GarageReceptionist getGarageReceptionist() {
-        return garageReceptionist;
-    }
-
-    public void setGarageReceptionist(GarageReceptionist garageReceptionist) {
-        this.garageReceptionist = garageReceptionist;
     }
 
     public ImageData getImageData() {
@@ -87,6 +76,22 @@ public class CarMechanic {
 
     public void setInvoices(List<Invoice> invoices) {
         this.invoices = invoices;
+    }
+
+    public List<Inspection> getInspections() {
+        return inspections;
+    }
+
+    public void setInspections(List<Inspection> inspections) {
+        this.inspections = inspections;
+    }
+
+    public List<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
     }
 }
 

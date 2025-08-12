@@ -1,18 +1,26 @@
 package com.example.eindeopdrachtvanrahman.dto;
 
+import com.example.eindeopdrachtvanrahman.models.CarMechanic;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 public class ClientDTO {
     private Long id;
-    private GarageReceptionistDTO garageReceptionistDTO;
+    @JsonIncludeProperties("id")
+    private CarMechanic carMechanic;
+
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
-    public GarageReceptionistDTO getGarageReceptionistDTO() {
-        return garageReceptionistDTO;
+
+    public CarMechanic getCarMechanic() {
+        return carMechanic;
     }
-    public void setGarageReceptionistDTO(GarageReceptionistDTO garageReceptionistDTO) {
-        this.garageReceptionistDTO = garageReceptionistDTO;
+
+    public void setCarMechanic(CarMechanic carMechanic) {
+        this.carMechanic = carMechanic;
     }
 }

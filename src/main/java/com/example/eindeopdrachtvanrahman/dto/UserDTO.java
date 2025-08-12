@@ -16,44 +16,44 @@ public class UserDTO {
         return username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public String getApikey() {
-        return apikey;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public Set<Authority> getAuthorities() {
-        return authorities;
-    }
-
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getApikey() {
+        return apikey;
     }
 
     public void setApikey(String apikey) {
         this.apikey = apikey;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Authority> getAuthorities() {
+        return authorities;
     }
 
     public void setAuthorities(Set<Authority> authorities) {

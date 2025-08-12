@@ -1,11 +1,11 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
+import com.example.eindeopdrachtvanrahman.dto.ClientDTO;
 import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
 import com.example.eindeopdrachtvanrahman.models.Client;
-import com.example.eindeopdrachtvanrahman.dto.ClientDTO;
 import com.example.eindeopdrachtvanrahman.models.User;
+import com.example.eindeopdrachtvanrahman.repository.CarMechanicRepository;
 import com.example.eindeopdrachtvanrahman.repository.ClientRepository;
-import com.example.eindeopdrachtvanrahman.repository.GarageReseptionistRepository;
 import com.example.eindeopdrachtvanrahman.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,15 +17,14 @@ import java.util.Optional;
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
-    private final GarageReseptionistRepository garageReseptionistRepository;
-    private final GarageReceptionistService garageReceptionistService;
+    private final CarMechanicRepository carMechanicRepository;
+    private final CarMechanicService carMechanicService;
     private final UserRepository userRepository;
 
-    public ClientService(ClientRepository clientRepository, GarageReseptionistRepository
-            garageReseptionistRepository, GarageReceptionistService garageReceptionistService, UserRepository userRepository) {
+    public ClientService(ClientRepository clientRepository, CarMechanicRepository carMechanicRepository, CarMechanicService carMechanicService, UserRepository userRepository) {
         this.clientRepository = clientRepository;
-        this.garageReseptionistRepository = garageReseptionistRepository;
-        this.garageReceptionistService = garageReceptionistService;
+        this.carMechanicRepository = carMechanicRepository;
+        this.carMechanicService = carMechanicService;
         this.userRepository = userRepository;
     }
 
@@ -43,11 +42,6 @@ public class ClientService {
         Optional<Client> clientOptional = clientRepository.findById(id);
         if (clientOptional.isPresent()) {
             Client client1 = clientOptional.get();
-            ClientDTO dto = transferToDTO(client1);
-            if (client1.getGarageReceptionist() != null) {
-                dto.setGarageReceptionistDTO(garageReceptionistService.transferToDTO(client1.getGarageReceptionist()));
-
-            }
             return transferToDTO(client1);
         } else {
             throw new RecordNotFoundException();
@@ -56,18 +50,16 @@ public class ClientService {
 
     public Client transferToClient(ClientDTO dto) {
         var client = new Client();
-
         client.setId(dto.getId());
+        client.setCarMechanic(dto.getCarMechanic());
         return client;
     }
 
     public ClientDTO transferToDTO(Client client) {
         ClientDTO dto = new ClientDTO();
         dto.setId(client.getId());
-        if (client.getGarageReceptionist() != null) {
-
-            dto.setGarageReceptionistDTO(garageReceptionistService.transferToDTO(client.getGarageReceptionist()));
-
+        if (client.getCarMechanic() != null) {
+            dto.setCarMechanic(client.getCarMechanic());
         }
         return dto;
     }
@@ -104,20 +96,21 @@ public class ClientService {
 
     }
 
-    public void assignGarageReseptionistToCliet(Long id, Long garageReseptionistId) {
+    public void assignCarMechanicToCliet(Long id, Long carMechanicId) {
         var optionalClient = clientRepository.findById(id);
-        var optionalGarageReseptionist = garageReseptionistRepository.findById(garageReseptionistId);
+        var optionalCarMechanic = carMechanicRepository.findById(carMechanicId);
 
-        if (optionalClient.isPresent() && optionalGarageReseptionist.isPresent()) {
+        if (optionalClient.isPresent() && optionalCarMechanic.isPresent()) {
             var client = optionalClient.get();
-            var garageReseptionist = optionalGarageReseptionist.get();
+            var carMechanic = optionalCarMechanic.get();
 
-            client.setGarageReceptionist(garageReseptionist);
+            client.setCarMechanic(carMechanic);
             clientRepository.save(client);
         } else {
             throw new RecordNotFoundException();
         }
     }
+
 
     public void assignUserToClient(Long id, String username) {
         var OptionalClient = clientRepository.findById(id);

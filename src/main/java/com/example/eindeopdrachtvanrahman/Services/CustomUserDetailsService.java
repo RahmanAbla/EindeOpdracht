@@ -1,7 +1,7 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
-import com.example.eindeopdrachtvanrahman.models.Authority;
 import com.example.eindeopdrachtvanrahman.dto.UserDTO;
+import com.example.eindeopdrachtvanrahman.models.Authority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,16 +21,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
 
-
     @Override
-    public UserDetails loadUserByUsername(String username){
-        UserDTO userDTO=userServise.getUser(username);
-        String password=userDTO.getPassword();
-        Set<Authority>authorities=userDTO.getAuthorities();
-        List<GrantedAuthority>grantedAuthorities=new ArrayList<>();
-        for (Authority authority:authorities){
+    public UserDetails loadUserByUsername(String username) {
+        UserDTO userDTO = userServise.getUser(username);
+        String password = userDTO.getPassword();
+        Set<Authority> authorities = userDTO.getAuthorities();
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (Authority authority : authorities) {
             grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
         }
-        return new org.springframework.security.core.userdetails.User(username,password,grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(username, password, grantedAuthorities);
     }
 }

@@ -15,25 +15,29 @@ public class CarMechanicController {
     public CarMechanicController(CarMechanicService carMechanicService) {
         this.carMechanicService = carMechanicService;
     }
+
     @GetMapping("/carmechanics/get")
-    public ResponseEntity<List<CarMechanicDTO>>getAllCarMechanics() {
+    public ResponseEntity<List<CarMechanicDTO>> getAllCarMechanics() {
 
         List<CarMechanicDTO> dtos = carMechanicService.getAllCarMechanics();
 
         return ResponseEntity.ok(dtos);
     }
+
     @GetMapping("/carmechanics/{id}")
-    public ResponseEntity<CarMechanicDTO>getCarMechanicById(@PathVariable("id") Long id) {
+    public ResponseEntity<CarMechanicDTO> getCarMechanicById(@PathVariable("id") Long id) {
 
         CarMechanicDTO carMechanicDTO = carMechanicService.getCarMechanicById(id);
 
         return ResponseEntity.ok(carMechanicDTO);
     }
+
     @PostMapping("/carmechanics/add")
     public ResponseEntity<Object> addCarMechanicsById(@RequestBody CarMechanicDTO dto) {
-        CarMechanicDTO carMechanicDTO =carMechanicService.addCarMechanic(dto);
+        CarMechanicDTO carMechanicDTO = carMechanicService.addCarMechanic(dto);
         return ResponseEntity.created(null).body(carMechanicDTO);
     }
+
     @DeleteMapping("/carmechanics/{id}")
     public ResponseEntity<Object> deleteCarMechanic(@PathVariable Long id) {
 
@@ -41,17 +45,13 @@ public class CarMechanicController {
 
         return ResponseEntity.noContent().build();
     }
+
     @PutMapping("/carmechanics/{id}")
     public ResponseEntity<Object> updateCarMechanic(@PathVariable Long id, @RequestBody CarMechanicDTO newCarMechanic) {
-        CarMechanicDTO dto=carMechanicService.updateCarMechanic(id, newCarMechanic);
+        CarMechanicDTO dto = carMechanicService.updateCarMechanic(id, newCarMechanic);
         return ResponseEntity.ok(dto);
     }
-    //Dit is een andere manier om het te doen, met twee Pathvariables, maar het kan uiteraard ook anders.
-    @PutMapping("/carmechanics/{id}/{garagereceptionistsid}")
-    public ResponseEntity<Object>assignGarageReseptionistToCarMechanic(@PathVariable("id") Long id, @PathVariable("garagereceptionistsid") Long garagereceptionistsid) {
-        carMechanicService.assignGarageReseptionistToCarMechanic(id,garagereceptionistsid );
-        return ResponseEntity.noContent().build();
-    }
+
     @PutMapping("/carmechanics/{id}/image/{nameOfImage}")
     @Transactional
     public void assignImageToCarMechanic(@PathVariable("id") Long id, @PathVariable("nameOfImage") String nameOfImage) {
@@ -60,6 +60,6 @@ public class CarMechanicController {
 
     @PutMapping("/carmechanics/user/{id}/{userName}")
     public void assignUserToCarMechanic(@PathVariable("id") Long id, @PathVariable("userName") String userName) {
-        carMechanicService.assignUserToCarMechanic(id,userName);
+        carMechanicService.assignUserToCarMechanic(id, userName);
     }
 }

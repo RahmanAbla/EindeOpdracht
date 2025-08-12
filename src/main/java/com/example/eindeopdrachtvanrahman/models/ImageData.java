@@ -2,6 +2,7 @@ package com.example.eindeopdrachtvanrahman.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 @Entity
 @Table(name = "image")
 @AllArgsConstructor
@@ -14,12 +15,12 @@ public class ImageData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private  String nameOfImage;
+    private String nameOfImage;
     @Column
     private String typeOfImage;
     @Lob
-    private byte[]imageData;
-    @OneToOne(mappedBy ="imageData",cascade = CascadeType.ALL)
+    private byte[] imageData;
+    @OneToOne(mappedBy = "imageData", cascade = CascadeType.ALL)
     private CarMechanic carMechanic;
 
 }

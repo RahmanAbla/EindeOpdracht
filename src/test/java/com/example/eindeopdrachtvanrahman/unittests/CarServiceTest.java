@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,6 +38,7 @@ public class CarServiceTest {
         CarDTO carDTO = service.getCarsById(20L);
         assertEquals(20L, carDTO.getId());
     }
+
     @Test
     void shouldRetrieveCorrectCars() {
         Car car = new Car("TOYOTA", "Yaris", 2018, 20L);
@@ -114,6 +114,7 @@ public class CarServiceTest {
         inputDto.setManufacturingyear(2020);
         assertThrows(RecordNotFoundException.class, () -> service.updateCar(nonExistentCarId, inputDto));
     }
+
     @Test
     void shouldAssignClientToCar() {
         // Arrange
@@ -133,6 +134,7 @@ public class CarServiceTest {
         assertEquals(client, car.getClient()); // controleer of client gekoppeld is
         verify(carRepository).save(car); // controleer of opgeslagen is
     }
+
     @Test
     void shouldThrowRecordNotFoundWhenCarOrClientDoesNotExist() {
         Long carId = 1L;
@@ -154,6 +156,25 @@ public class CarServiceTest {
         });
     }
 
+    @Test
+    void shouldSetClientInDTOWhenCarHasClient() {
+        // Arrange
+        Client client = new Client(5L);
+
+        Car car = new Car();
+        car.setId(1L);
+        car.setBrand("Toyota");
+        car.setModel("Corolla");
+        car.setManufacturingyear(2020);
+        car.setClient(client);
+
+        // Act
+        CarDTO dto = service.transferToDTO(car);
+
+        // Assert
+        assertNotNull(dto.getClient());
+        assertEquals(5L, dto.getClient().getId());
+    }
 
 
 }

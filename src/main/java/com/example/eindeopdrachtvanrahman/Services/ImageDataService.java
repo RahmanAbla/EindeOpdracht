@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class ImageDataService {
     private final ImageRepository imageRepository;
@@ -26,45 +27,48 @@ public class ImageDataService {
         this.imageRepository = imageRepository;
         this.clientRepository = clientRepository;
     }
-    public ResponseEntity<String >uploadImage(Long id, MultipartFile file, ImageDataDto dto)
-        throws IOException{
+
+    public ResponseEntity<String> uploadImage(Long id, MultipartFile file, ImageDataDto dto)
+            throws IOException {
         Optional<Client>
-                client=clientRepository.findById(id);
-        if (client.isPresent()){
+                client = clientRepository.findById(id);
+        if (client.isPresent()) {
             ImageData imageData = transferToImage(dto);
-            imageRepository.save(imageData.builder()
+            imageRepository.save(ImageData.builder()
                     .nameOfImage(file.getOriginalFilename())
                     .typeOfImage(file.getContentType())
                     .imageData(ImageUtils.compressImage(file.getBytes())).build());
-            if (imageData != null){
+            if (imageData != null) {
                 return ResponseEntity.ok().body(file.getOriginalFilename());
             }
         }
 
         return ResponseEntity.badRequest().build();
     }
-    public ImageDataDto getImageDataById(Long id){
+
+    public ImageDataDto getImageDataById(Long id) {
         Optional<ImageData> imageData = imageRepository.findById(id);
-        if (imageData.isPresent()){
+        if (imageData.isPresent()) {
             return transferToDto(imageData.get());
         } else {
             throw new RecordNotFoundException("no image found");
         }
     }
-    public List<ImageDataDto> getAllImageData(){
+
+    public List<ImageDataDto> getAllImageData() {
         List<ImageDataDto> dtoOutputs = new ArrayList<>();
         List<ImageData> imageData = imageRepository.findAll();
-        for (ImageData imageData1 : imageData){
+        for (ImageData imageData1 : imageData) {
             dtoOutputs.add(transferToDto(imageData1));
         }
         return dtoOutputs;
     }
 
-    public void deleteImage(Long id){
+    public void deleteImage(Long id) {
         imageRepository.deleteById(id);
     }
 
-    public ImageData transferToImage(ImageDataDto dto){
+    public ImageData transferToImage(ImageDataDto dto) {
 
         var image = new ImageData();
 
@@ -76,7 +80,7 @@ public class ImageDataService {
 
     }
 
-    public ImageDataDto transferToDto(ImageData imageData){
+    public ImageDataDto transferToDto(ImageData imageData) {
         var dto = new ImageDataDto();
 
         dto.setId(imageData.getId());
@@ -88,7 +92,7 @@ public class ImageDataService {
     }
 
 
-    public ResponseEntity<byte[]> singleFileDownload(String fileName, HttpServletRequest request){
+    public ResponseEntity<byte[]> singleFileDownload(String fileName, HttpServletRequest request) {
 
         ImageData document = imageRepository.findByNameOfImage(fileName);
 

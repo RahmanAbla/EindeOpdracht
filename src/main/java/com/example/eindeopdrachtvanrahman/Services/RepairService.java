@@ -1,9 +1,8 @@
 package com.example.eindeopdrachtvanrahman.Services;
 
-import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
-import com.example.eindeopdrachtvanrahman.models.Car;
-import com.example.eindeopdrachtvanrahman.models.Repair;
 import com.example.eindeopdrachtvanrahman.dto.RepairDTO;
+import com.example.eindeopdrachtvanrahman.exeptions.RecordNotFoundException;
+import com.example.eindeopdrachtvanrahman.models.Repair;
 import com.example.eindeopdrachtvanrahman.repository.CarMechanicRepository;
 import com.example.eindeopdrachtvanrahman.repository.CarRepository;
 import com.example.eindeopdrachtvanrahman.repository.RepairRepository;
@@ -26,10 +25,10 @@ public class RepairService {
         this.carMechanicRepository = carMechanicRepository;
     }
 
-    public List<RepairDTO>getAllRepairs() {
-        List<Repair>repairList = repairRepository.findAll();
+    public List<RepairDTO> getAllRepairs() {
+        List<Repair> repairList = repairRepository.findAll();
         List<RepairDTO> repairDTOList = new ArrayList<>();
-        for (Repair repair :repairList) {
+        for (Repair repair : repairList) {
             RepairDTO dto = transferToDTO(repair);
             repairDTOList.add(dto);
         }
@@ -39,7 +38,7 @@ public class RepairService {
 
     public RepairDTO getRepairById(Long id) {
         Optional<Repair> repairOptional = repairRepository.findById(id);
-        if (repairOptional.isPresent()){
+        if (repairOptional.isPresent()) {
 
             Repair repair1 = repairOptional.get();
             return transferToDTO(repair1);
@@ -49,25 +48,34 @@ public class RepairService {
     }
 
 
-
-    public Repair transferToRepair(RepairDTO dto){
-            var repair=new Repair();
-            repair.setId(dto.getId());
+    public Repair transferToRepair(RepairDTO dto) {
+        var repair = new Repair();
+        repair.setId(dto.getId());
         repair.setDescription(dto.getDescription());
         repair.setTreatment(dto.getTreatment());
         repair.setStatus(dto.isStatus());
+        repair.setCarMechanic(dto.getCarMechanic());
+        repair.setCar(dto.getCar());
         return repair;
     }
+
     public RepairDTO transferToDTO(Repair repair) {
         RepairDTO dto = new RepairDTO();
         dto.setId(repair.getId());
         dto.setDescription(repair.getDescription());
         dto.setTreatment(repair.getTreatment());
         dto.setStatus(repair.isStatus());
+        if (repair.getCarMechanic() != null) {
+            dto.setCarMechanic(repair.getCarMechanic());
+        }
+        if (repair.getCar() != null) {
+            dto.setCar(repair.getCar());
+        }
         return dto;
     }
+
     public RepairDTO addRepair(RepairDTO dto) {
-        Repair repair=transferToRepair(dto);
+        Repair repair = transferToRepair(dto);
         repairRepository.save(repair);
         return transferToDTO(repair);
     }
@@ -92,30 +100,33 @@ public class RepairService {
         }
 
     }
+
     public void deleteRepair(@RequestBody Long id) {
 
         repairRepository.deleteById(id);
 
     }
-    public void assignCarToRepair(Long id, Long CarId) {
-      var  OptionalRepair = repairRepository.findById(id);
-     var  OptionalCar=carRepository.findById(CarId);
 
-        if (OptionalRepair.isPresent()&&OptionalCar.isPresent()) {
-            var Repair=OptionalRepair.get();
-            var car =OptionalCar.get();
-           Repair .setCar(car);
-           repairRepository.save(Repair);
+    public void assignCarToRepair(Long id, Long CarId) {
+        var OptionalRepair = repairRepository.findById(id);
+        var OptionalCar = carRepository.findById(CarId);
+
+        if (OptionalRepair.isPresent() && OptionalCar.isPresent()) {
+            var Repair = OptionalRepair.get();
+            var car = OptionalCar.get();
+            Repair.setCar(car);
+            repairRepository.save(Repair);
 
         } else {
             throw new RecordNotFoundException();
         }
     }
+
     public void assignCarMechanicToRepair(Long id, Long carMechanicId) {
         var optionalRepair = repairRepository.findById(id);
         var optionalCarMechanic = carMechanicRepository.findById(carMechanicId);
 
-        if (optionalRepair.isPresent() &&optionalCarMechanic.isPresent()) {
+        if (optionalRepair.isPresent() && optionalCarMechanic.isPresent()) {
             var repair = optionalRepair.get();
             var carMechanic = optionalCarMechanic.get();
 
