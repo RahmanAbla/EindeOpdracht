@@ -4,4 +4,4 @@ INSERT INTO authorities (username, authority) VALUES ('henk', 'ROLE_MECHANIC'),(
 INSERT INTO cars(brand,model,manufacturingYear)VALUES('Toyota','C-HR',2020);
 INSERT INTO inspections(status,report,inspection_cost)VALUES (true,'Inspection completed successfully',130.30);
 INSERT INTO invoices(description,repair_cost,part_cost,inspection_cost,total_cost)VALUES ('Replacement of front tires',200.50,100.10,50.00,350.60);
-INSERT INTO repairs(description,treatment,status)VALUES ('General maintenance and repair','Replace front tires',true);
+INSERT INTO repairs(description,treatment,status)VALUES ('General maintenance and repair','Replace front tires', true);
